@@ -1,0 +1,59 @@
+[
+  {
+    "id": "fraunces-newsreader",
+    "heading": {
+      "slug": "Fraunces",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["display", "wonky", "old-style"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Newsreader",
+      "role": "body",
+      "category": "serif",
+      "tags": ["editorial", "transitional", "news"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "space-grotesk-crimson-pro",
+    "heading": {
+      "slug": "Space Grotesk",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "technical", "quirky"],
+      "weights": [500, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Crimson Pro",
+      "role": "body",
+      "category": "serif",
+      "tags": ["garalde", "bookish", "warm"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "instrument-sans-lora",
+    "heading": {
+      "slug": "Instrument Sans",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "neutral", "modern"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Lora",
+      "role": "body",
+      "category": "serif",
+      "tags": ["contemporary", "calligraphic", "warm"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  }
+]

@@ -1,0 +1,397 @@
+/*
+ * T11 — the prescription view (design-brief §3, LEADER-LINE REVEAL raise).
+ *
+ * The pad overlays the examination room (an absolutely-positioned child of
+ * `.examination-room`, which is `position: relative`): a chart-paper sheet
+ * placed over the lane while the room's three regions stand down inert
+ * (examinationRoom.setPrescribing). Palette and chrome face are inherited
+ * from the room's custom properties — the same bone/sheet/ink/hairline
+ * family, IBM Plex Sans. ONE CORD holds: the prescription uses NO cord
+ * color; red/green stay reserved for judgment controls only.
+ *
+ * Motion: the pad is PLACED on the chart — one stepped rise from below the
+ * fold (steps(), never an ease; nothing glides), the scrim dims instantly.
+ * `prefers-reduced-motion` collapses the rise to an instant mount.
+ * Departure is always instant: the reveal's counterpart — closing — strips
+ * the names, and that must read as immediate, not performed.
+ *
+ * Contrast (WCAG, on sheet #FBF9F4): ink #14181A 16.1:1 · soft ink #57534B
+ * 6.9:1 — every text pair clears 4.5:1 (town-hall criterion 6).
+ */
+
+/* --- The overlay (scrim + pad) --------------------------------------------- */
+
+.prescription-view {
+  position: absolute; /* inside .examination-room (position: relative) */
+  inset: 0;
+  z-index: 30; /* above the lane's card and its occluder, above the bar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 2.5vh, 1.5rem) clamp(0.75rem, 3vw, 2rem);
+}
+
+/* Author display rules would otherwise override the hidden attribute. */
+.prescription-view[hidden] {
+  display: none;
+}
+
+.prescription-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 24, 26, 0.38); /* instrument ink, translucent */
+}
+
+.prescription-pad {
+  position: relative;
+  z-index: 1; /* above the scrim */
+  display: flex;
+  flex-direction: column;
+  width: min(44rem, 100%);
+  max-height: 100%; /* within the overlay's padded box */
+  padding: clamp(1.2rem, 1rem + 2.2vh, 2rem) clamp(1.3rem, 1rem + 2vw, 2.4rem)
+    clamp(1.1rem, 1rem + 1.8vh, 1.75rem);
+  border-radius: 12px; /* the chart paper's radius (chrome.css .dummy-frame) */
+  background: var(--sheet);
+  color: var(--ink);
+  box-shadow:
+    0 1.6rem 3.6rem rgba(20, 24, 26, 0.26),
+    0 0.2rem 0.55rem rgba(20, 24, 26, 0.12);
+  animation: rx-pad-in 170ms steps(3, end);
+}
+
+/* The pad is placed on the chart: one whole rise in three stepped clicks. */
+@keyframes rx-pad-in {
+  from {
+    transform: translateY(18px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prescription-pad {
+    animation: none; /* the pad simply appears */
+  }
+}
+
+/* --- Pad header: title, back act, count, note ------------------------------- */
+
+.rx-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.25rem;
+}
+
+.rx-title {
+  margin: 0;
+  font-size: 1.22rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.rx-title:focus {
+  outline: none; /* the open hands focus here; the ring would be noise —
+                    the pad itself is the focus indication, and the next Tab
+                    reaches a real control with its ring */
+}
+
+.rx-back {
+  margin: 0;
+  padding: 0.32em 1.05em;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-chrome);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.rx-back:hover {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.rx-count {
+  margin: 0.45rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.rx-note {
+  margin: 0.15rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 0.7rem;
+}
+
+/* --- The entries ledger (scrolls when long) ---------------------------------- */
+
+.rx-entries {
+  min-height: 0; /* lets the ledger scroll inside the pad's flex column */
+  overflow-y: auto;
+  display: grid;
+  gap: 0.9rem;
+  padding-top: 0.9rem;
+  scrollbar-width: thin;
+  scrollbar-color: #9a9285 transparent;
+}
+
+.rx-entry {
+  padding: 0.15rem 0 0.3rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.rx-entry:last-child {
+  border-bottom: 0;
+}
+
+.rx-entry-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.45rem;
+}
+
+.rx-entry-rx {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.rx-remove {
+  margin: 0;
+  padding: 0.22em 0.85em;
+  border: 1px solid var(--ink-soft);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-chrome);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.rx-remove:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bone);
+}
+
+/* --- Export act (T12) ---------------------------------------------------------
+   One "Copy CSS" pill per entry beside Remove. STATES IN PLACE: the
+   success feedback is an in-place label swap ("Copy CSS" → "Copied") and
+   the min-width below holds the pill's geometry through it — the row never
+   reflows. The copied state fills with ink (an instrument acknowledgment,
+   not a judgment — ONE CORD holds: no red/green here). */
+
+.rx-entry-actions {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.rx-copy {
+  margin: 0;
+  min-width: 6.4em; /* holds both labels — the swap moves nothing */
+  padding: 0.22em 0.85em;
+  border: 1px solid var(--ink-soft);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-chrome);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: center;
+  cursor: pointer;
+}
+
+.rx-copy:hover {
+  border-color: var(--ink);
+}
+
+.rx-copy[data-state='copied'] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bone);
+  cursor: default;
+}
+
+/* Clipboard-failure fallback: the snippet, revealed in place beneath the
+   annotation it belongs to — read-only, preselected, one manual keystroke
+   from the clipboard. Monospace is presentation of code, not chrome
+   letterforms (the no-chart-letterforms constraint concerns the chrome). */
+
+.rx-export {
+  margin-top: 0.55rem;
+}
+
+.rx-export[hidden] {
+  display: none;
+}
+
+.rx-export-label {
+  margin: 0 0 0.35rem;
+  color: var(--ink-soft);
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.rx-export-text {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 9.5rem;
+  margin: 0;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: var(--bone);
+  color: var(--ink);
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.rx-export-text:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+
+/* --- LEADER-LINE REVEAL: the engineering annotation -------------------------
+   One row per family: role label — leader line — name. The leader is a
+   dimension line: an origin dot at the label end, a hairline run, and an
+   arrowhead terminal pointing AT the name it annotates. All decoration is
+   aria-hidden (savedList.ts); the label and name carry the facts. */
+
+.rx-spec {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.rx-role {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.rx-role-label {
+  flex: none;
+  color: var(--ink-soft);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.rx-leader {
+  flex: 1 1 2.5rem;
+  min-width: 1.75rem;
+  position: relative;
+  height: 0;
+  border-top: 1px solid var(--ink-soft);
+  opacity: 0.72;
+}
+
+/* Origin dot at the label end of the run. */
+.rx-leader::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -2.5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+}
+
+/* Arrowhead terminal at the name end — the annotation points at its name. */
+.rx-leader::after {
+  content: '';
+  position: absolute;
+  right: 0.5px;
+  top: -3.5px;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid var(--ink-soft);
+  border-right: 1.5px solid var(--ink-soft);
+  transform: rotate(45deg);
+  transform-origin: center;
+  background: transparent;
+}
+
+.rx-name {
+  flex: 0 1 auto; /* may wrap a very long name rather than overflow the row */
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+}
+
+.rx-meta {
+  margin: 0 0 0.35rem;
+  /* aligns the metadata under the name the leader points at */
+  padding-left: calc(0.66rem * 4 + 0.65rem);
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.rx-spec .rx-role[data-role='body'] + .rx-meta {
+  margin-bottom: 0;
+}
+
+/* --- Empty state (a designed state, design-brief §5) ------------------------- */
+
+.rx-empty {
+  padding: clamp(1.6rem, 4vh, 3rem) 0.5rem;
+  text-align: center;
+}
+
+.rx-empty[hidden] {
+  display: none;
+}
+
+.rx-empty-title {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.rx-empty-text {
+  margin: 0 auto;
+  max-width: 38ch;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* --- Narrow viewports ---------------------------------------------------------
+   The annotation stays one line (label — leader — name): the leader is the
+   flexible member and shrinks toward its minimum; only a genuinely long name
+   wraps, and the metadata register drops its inset when space runs out. */
+
+@media (max-width: 30rem) {
+  .rx-name {
+    font-size: 0.94rem;
+  }
+
+  .rx-meta {
+    padding-left: 0;
+  }
+}

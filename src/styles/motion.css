@@ -1,0 +1,202 @@
+/*
+ * T09 — the lens-swap moment (design-brief §3 focal moment, seed fab7b459):
+ * "an occluder sweep and detent settle as the new pairing arrives; under
+ * prefers-reduced-motion it is instant."
+ *
+ * Choreography (driven by src/components/examinationRoom.ts, sequenced by
+ * src/main.ts against T04's readiness gate — R2's caller order: the reveal
+ * happens only AFTER the gate's double-rAF + a confirmed paint of the
+ * variable swap + the old stylesheet's release):
+ *
+ *   1. COVER    On judgment, a clinical blind (the optician's occluder — an
+ *               instrument-black panel, card-covering) drops from the deck
+ *               above in DISCRETE STEPS and covers the paper while the fonts
+ *               load. The previous pairing stays rendered underneath the
+ *               opaque blind: the CSS font variables are untouched until the
+ *               gate passes, so there is no fallback-glyph window to judge
+ *               (criterion 1). The lane's scroll position resets under cover
+ *               (each new page is judged from its headline) and the lane
+ *               clips (`overflow: hidden`) for the duration — the blind
+ *               physically enters/leaves through the wall, never through a
+ *               scrollbar.
+ *   2. REVEAL   When the gate passes and the variables have swapped under
+ *               cover, the blind departs DOWNWARD across the card face — one
+ *               whole card-height traverse in four stepped clicks, revealing
+ *               the new pairing top-first — and the card answers with the
+ *               SNAP-STEP detent: one step past its seat (overshoot), then a
+ *               click back into place (settle). SNAP-STEP DECK: whole
+ *               card-heights, one-step overshoot, settle — nothing glides;
+ *               every animation below is a `steps()` timing, never an ease.
+ *   3. ERROR    A failed gate (4000 ms timeout et al.) lifts the blind the
+ *               same way, re-revealing the UNCHANGED previous pairing, and
+ *               the strip carries a STATES-IN-PLACE notice with the retry
+ *               act (the exhaustion notice's anatomy — one line + one pill).
+ *
+ * `prefers-reduced-motion: reduce` collapses all of it: no occluder, no
+ * detent, instant swap (the room also never mounts the blind under reduce;
+ * the rules here are the second belt).
+ */
+
+/* The blind anchors to the chart paper itself (it travels with the card). */
+.dummy-frame {
+  position: relative;
+}
+
+/* --- The occluder (clinical blind) ------------------------------------- */
+
+.lens-blind {
+  position: absolute;
+  inset: 0;
+  z-index: 3; /* above the essay; the paper's own shadow still frames it */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit; /* the card's 12px — the blind is card-shaped */
+  background: var(--ink); /* instrument black — the optician's occluder */
+  color: var(--bone);
+  box-shadow: inset 0 0 0 1px rgba(242, 238, 230, 0.14);
+  /* Parked one card-height above the seat (inside the wall, clipped by the
+     locked lane) until a cover drops it into place. */
+  transform: translateY(-100%);
+}
+
+.lens-blind[hidden] {
+  display: none;
+}
+
+.lens-blind-label {
+  margin: 0;
+  font-family: var(--font-chrome);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.82;
+}
+
+/* Cover: the blind drops one whole card-height into the seat — 3 clicks. */
+.lens-blind.is-dropping {
+  animation: lens-blind-drop 150ms steps(3, end) forwards;
+}
+
+@keyframes lens-blind-drop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Reveal (success and error alike): the blind departs one whole card-height
+   down across the face — 4 clicks, top-first reveal — and is hidden by the
+   room once it has cleared into the deck below the fold. */
+.lens-blind.is-lifting {
+  animation: lens-blind-lift 240ms steps(4, end) forwards;
+}
+
+@keyframes lens-blind-lift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* --- SNAP-STEP detent (the deck's arrival click) ------------------------ */
+
+/* One step PAST the seat (overshoot, following the blind's departure), then
+   a click back into place (settle) — two stepped clicks each way, delayed
+   until the blind has cleared the headline. `backwards` holds the seat
+   during the delay. */
+.dummy-frame.is-detenting {
+  animation: lens-detent 190ms steps(2, end) 90ms backwards;
+}
+
+@keyframes lens-detent {
+  0% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(14px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* --- Lane clip during the swap ------------------------------------------ */
+
+/* The choreography's geometry lives inside the wall: the blind arrives from
+   above the seat and departs below the fold, so the lane clips for the
+   duration — and clips WITHOUT minting scrollbars for the transient
+   transforms (overflow-x already hidden since T08; this adds the y axis and
+   keeps classic-scrollbar platforms from jiggling the card when the
+   overflow value flips). */
+.acuity-lane.is-swapping {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+/* --- Swap-error notice (STATES IN PLACE) --------------------------------- */
+
+/* The same strip-row anatomy as the first-run explainer and the D7 cycle
+   notice (T07/T08): one quiet line + one pill act, restyling the strip in
+   place; the judged content never moves for the state. The retry act is the
+   user's only move while the error stands — the bar stays disabled. */
+.lane-swap-error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
+  padding: 0.6rem clamp(1rem, 2.5vw, 2rem) 0.85rem;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.82rem;
+}
+
+.lane-swap-error[hidden] {
+  display: none;
+}
+
+.lane-swap-error-text {
+  margin: 0;
+  color: var(--ink);
+}
+
+.lane-swap-error-retry {
+  margin: 0;
+  padding: 0.32em 1.05em;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-chrome);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.lane-swap-error-retry:hover {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+/* --- Reduced motion: instant swap ---------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .lens-blind {
+    display: none; /* no occluder — the room also never mounts it */
+  }
+
+  .lens-blind.is-dropping,
+  .lens-blind.is-lifting {
+    animation: none;
+  }
+
+  .dummy-frame.is-detenting {
+    animation: none; /* no overshoot — the pairing simply arrives */
+  }
+}

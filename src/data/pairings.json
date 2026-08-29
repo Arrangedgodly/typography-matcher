@@ -1,0 +1,1161 @@
+[
+  {
+    "id": "fraunces-newsreader",
+    "heading": {
+      "slug": "Fraunces",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["display", "wonky", "old-style"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Newsreader",
+      "role": "body",
+      "category": "serif",
+      "tags": ["editorial", "transitional", "news"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "space-grotesk-crimson-pro",
+    "heading": {
+      "slug": "Space Grotesk",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "technical", "quirky"],
+      "weights": [500, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Crimson Pro",
+      "role": "body",
+      "category": "serif",
+      "tags": ["garalde", "bookish", "warm"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "instrument-sans-lora",
+    "heading": {
+      "slug": "Instrument Sans",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "neutral", "modern"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Lora",
+      "role": "body",
+      "category": "serif",
+      "tags": ["contemporary", "calligraphic", "warm"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "playfair-display-source-sans-3",
+    "heading": {
+      "slug": "Playfair Display",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["high-contrast", "transitional", "editorial"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Source Sans 3",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["humanist", "clear", "versatile"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "dm-serif-display-mulish",
+    "heading": {
+      "slug": "DM Serif Display",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["twentieth-century", "sturdy", "display"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Mulish",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["rounded", "neutral", "friendly"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "prata-karla",
+    "heading": {
+      "slug": "Prata",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["didone", "display", "elegant"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Karla",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["grotesque", "quirky", "upright"],
+      "weights": [400, 700],
+      "italic": true
+    }
+  },
+  {
+    "id": "spectral-ibm-plex-sans",
+    "heading": {
+      "slug": "Spectral",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["contemporary", "french", "screen-first"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "IBM Plex Sans",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["neo-grotesque", "engineered", "neutral"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "eb-garamond-inter",
+    "heading": {
+      "slug": "EB Garamond",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["garamond", "old-style", "humanist"],
+      "weights": [500, 600],
+      "italic": false
+    },
+    "body": {
+      "slug": "Inter",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["neo-grotesque", "ui-native", "neutral"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "libre-baskerville-montserrat",
+    "heading": {
+      "slug": "Libre Baskerville",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["transitional", "bookish", "sturdy"],
+      "weights": [700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Montserrat",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["geometric", "urban", "tall-x"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "lora-open-sans",
+    "heading": {
+      "slug": "Lora",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["contemporary", "brushed", "sturdy"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Open Sans",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["humanist", "neutral", "ubiquitous"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "dm-serif-text-literata",
+    "heading": {
+      "slug": "DM Serif Text",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["sturdy", "warm", "text-oriented"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Literata",
+      "role": "body",
+      "category": "serif",
+      "tags": ["bookish", "calligraphic", "screen-first"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "ibm-plex-serif-ibm-plex-sans",
+    "heading": {
+      "slug": "IBM Plex Serif",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["corporate", "transitional", "engineered"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "IBM Plex Sans",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["neo-grotesque", "engineered", "neutral"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "roboto-slab-spectral",
+    "heading": {
+      "slug": "Roboto Slab",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["slab", "contemporary", "neutral"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Spectral",
+      "role": "body",
+      "category": "serif",
+      "tags": ["french", "editorial", "screen-first"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "manrope-source-serif-4",
+    "heading": {
+      "slug": "Manrope",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["semi-geometric", "contemporary", "neutral"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Source Serif 4",
+      "role": "body",
+      "category": "serif",
+      "tags": ["transitional", "workhorse", "editorial"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "figtree-crimson-pro",
+    "heading": {
+      "slug": "Figtree",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["geometric", "friendly", "contemporary"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Crimson Pro",
+      "role": "body",
+      "category": "serif",
+      "tags": ["garalde", "bookish", "warm"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "schibsted-grotesk-merriweather",
+    "heading": {
+      "slug": "Schibsted Grotesk",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "editorial", "nordic"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Merriweather",
+      "role": "body",
+      "category": "serif",
+      "tags": ["sturdy", "screen-first", "generous"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "hanken-grotesk-petrona",
+    "heading": {
+      "slug": "Hanken Grotesk",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "smooth", "contemporary"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Petrona",
+      "role": "body",
+      "category": "serif",
+      "tags": ["warm", "quirky", "latin-american"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "urbanist-newsreader",
+    "heading": {
+      "slug": "Urbanist",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["geometric", "clean", "minimal"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Newsreader",
+      "role": "body",
+      "category": "serif",
+      "tags": ["editorial", "transitional", "news"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "public-sans-eb-garamond",
+    "heading": {
+      "slug": "Public Sans",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["neo-grotesque", "utilitarian", "official"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "EB Garamond",
+      "role": "body",
+      "category": "serif",
+      "tags": ["old-style", "humanist", "bookish"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "sora-alegreya",
+    "heading": {
+      "slug": "Sora",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["geometric", "techy", "open"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Alegreya",
+      "role": "body",
+      "category": "serif",
+      "tags": ["calligraphic", "literary", "humanist"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "gabarito-cardo",
+    "heading": {
+      "slug": "Gabarito",
+      "role": "heading",
+      "category": "display",
+      "tags": ["soft", "friendly", "display"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Cardo",
+      "role": "body",
+      "category": "serif",
+      "tags": ["classical", "scholarly", "renaissance"],
+      "weights": [400, 700],
+      "italic": false
+    }
+  },
+  {
+    "id": "plus-jakarta-sans-pt-serif",
+    "heading": {
+      "slug": "Plus Jakarta Sans",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["geometric", "city", "versatile"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "PT Serif",
+      "role": "body",
+      "category": "serif",
+      "tags": ["transitional", "neutral", "compact"],
+      "weights": [400, 700],
+      "italic": true
+    }
+  },
+  {
+    "id": "epilogue-vollkorn",
+    "heading": {
+      "slug": "Epilogue",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "sturdy", "versatile"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Vollkorn",
+      "role": "body",
+      "category": "serif",
+      "tags": ["chunky", "old-style", "sturdy"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "geist-zilla-slab",
+    "heading": {
+      "slug": "Geist",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["neo-grotesque", "technical", "crisp"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Zilla Slab",
+      "role": "body",
+      "category": "serif",
+      "tags": ["slab", "technical", "mozilla-born"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "spline-sans-bitter",
+    "heading": {
+      "slug": "Spline Sans",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "curved", "terminal-inspired"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Bitter",
+      "role": "body",
+      "category": "serif",
+      "tags": ["slab", "robust", "screen-first"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "chivo-libre-caslon-text",
+    "heading": {
+      "slug": "Chivo",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "sturdy", "flexible"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Libre Caslon Text",
+      "role": "body",
+      "category": "serif",
+      "tags": ["caslon", "bookish", "sturdy"],
+      "weights": [400, 700],
+      "italic": false
+    }
+  },
+  {
+    "id": "readex-pro-roboto-serif",
+    "heading": {
+      "slug": "Readex Pro",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["low-contrast", "arabic-latin", "accessible"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Roboto Serif",
+      "role": "body",
+      "category": "serif",
+      "tags": ["contemporary", "neutral", "system-derived"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "encode-sans-arvo",
+    "heading": {
+      "slug": "Encode Sans",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "simplified", "workhorse"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Arvo",
+      "role": "body",
+      "category": "serif",
+      "tags": ["slab", "geometric", "blunt"],
+      "weights": [400, 700],
+      "italic": true
+    }
+  },
+  {
+    "id": "abril-fatface-fira-sans",
+    "heading": {
+      "slug": "Abril Fatface",
+      "role": "heading",
+      "category": "display",
+      "tags": ["fatface", "poster", "spanish"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Fira Sans",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["humanist", "mozilla-born", "open"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "yeseva-one-rubik",
+    "heading": {
+      "slug": "Yeseva One",
+      "role": "heading",
+      "category": "display",
+      "tags": ["slab", "decorative", "warm"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Rubik",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["rounded", "contemporary", "israeli"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "cinzel-barlow",
+    "heading": {
+      "slug": "Cinzel",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["inscriptional", "roman", "formal"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Barlow",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["grotesque", "low-contrast", "technical"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "alfa-slab-one-archivo",
+    "heading": {
+      "slug": "Alfa Slab One",
+      "role": "heading",
+      "category": "display",
+      "tags": ["slab", "heavy", "poster"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Archivo",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["grotesque", "sturdy", "latin-american"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "archivo-black-overpass",
+    "heading": {
+      "slug": "Archivo Black",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "heavy", "poster"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Overpass",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["grotesque", "highway-derived", "open"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "anton-be-vietnam-pro",
+    "heading": {
+      "slug": "Anton",
+      "role": "heading",
+      "category": "display",
+      "tags": ["condensed", "grotesque", "heavy"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Be Vietnam Pro",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["grotesque", "vietnamese-latin", "neutral"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "unbounded-lexend",
+    "heading": {
+      "slug": "Unbounded",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["wide", "futuristic", "display"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Lexend",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["readability-first", "even", "modern"],
+      "weights": [400, 600],
+      "italic": false
+    }
+  },
+  {
+    "id": "bebas-neue-red-hat-text",
+    "heading": {
+      "slug": "Bebas Neue",
+      "role": "heading",
+      "category": "display",
+      "tags": ["condensed", "all-caps", "poster"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Red Hat Text",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["humanist", "friendly", "open"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "syne-exo-2",
+    "heading": {
+      "slug": "Syne",
+      "role": "heading",
+      "category": "display",
+      "tags": ["eccentric", "wide", "artistic"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Exo 2",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["geometric", "techy", "future-flavored"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "oswald-roboto",
+    "heading": {
+      "slug": "Oswald",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["condensed", "grotesque", "poster"],
+      "weights": [500, 600],
+      "italic": false
+    },
+    "body": {
+      "slug": "Roboto",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["neo-grotesque", "ubiquitous", "neutral"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "caveat-domine",
+    "heading": {
+      "slug": "Caveat",
+      "role": "heading",
+      "category": "handwriting",
+      "tags": ["handwritten", "casual", "marker"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Domine",
+      "role": "body",
+      "category": "serif",
+      "tags": ["sturdy", "friendly", "bookish"],
+      "weights": [400, 600],
+      "italic": false
+    }
+  },
+  {
+    "id": "bricolage-grotesque-jetbrains-mono",
+    "heading": {
+      "slug": "Bricolage Grotesque",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["expressive", "mixed-genre", "contemporary"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "JetBrains Mono",
+      "role": "body",
+      "category": "monospace",
+      "tags": ["monospace", "code-born", "legible"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "space-grotesk-space-mono",
+    "heading": {
+      "slug": "Space Grotesk",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "technical", "quirky"],
+      "weights": [500, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Space Mono",
+      "role": "body",
+      "category": "monospace",
+      "tags": ["monospace", "quirky", "retro-future"],
+      "weights": [400, 700],
+      "italic": true
+    }
+  },
+  {
+    "id": "raleway-ubuntu",
+    "heading": {
+      "slug": "Raleway",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["elegant", "grotesque", "distinct"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Ubuntu",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["humanist", "rounded", "canonical-born"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "dm-sans-cabin",
+    "heading": {
+      "slug": "DM Sans",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["geometric", "low-contrast", "modern"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Cabin",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["humanist", "sturdy", "friendly"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "josefin-sans-heebo",
+    "heading": {
+      "slug": "Josefin Sans",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["geometric", "vintage", "high-waisted"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Heebo",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["neo-grotesque", "hebrew-latin", "smooth"],
+      "weights": [400, 500],
+      "italic": false
+    }
+  },
+  {
+    "id": "titillium-web-libre-franklin",
+    "heading": {
+      "slug": "Titillium Web",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["techy", "narrow", "open"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Libre Franklin",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["franklin", "american", "workhorse"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "outfit-noto-sans",
+    "heading": {
+      "slug": "Outfit",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["geometric", "uniform", "minimal"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Noto Sans",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["workhorse", "pan-script", "neutral"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "bodoni-moda-source-serif-4",
+    "heading": {
+      "slug": "Bodoni Moda",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["didone", "sharp", "dramatic"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Source Serif 4",
+      "role": "body",
+      "category": "serif",
+      "tags": ["transitional", "workhorse", "editorial"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "fraunces-work-sans",
+    "heading": {
+      "slug": "Fraunces",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["display", "wonky", "old-style"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Work Sans",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["american-gothic", "plain", "capacious"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "cormorant-garamond-nunito-sans",
+    "heading": {
+      "slug": "Cormorant Garamond",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["garamond", "delicate", "old-style"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Nunito Sans",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["rounded", "soft", "friendly"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "marcellus-lato",
+    "heading": {
+      "slug": "Marcellus",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["classical", "inscriptional", "quiet"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Lato",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["humanist", "warm", "summer-born"],
+      "weights": [400, 700],
+      "italic": true
+    }
+  },
+  {
+    "id": "italiana-poppins",
+    "heading": {
+      "slug": "Italiana",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["fashion", "monoline", "elegant"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Poppins",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["geometric", "devanagari-latin", "friendly"],
+      "weights": [400, 600],
+      "italic": true
+    }
+  },
+  {
+    "id": "alegreya-alegreya-sans",
+    "heading": {
+      "slug": "Alegreya",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["calligraphic", "literary", "humanist"],
+      "weights": [500, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Alegreya Sans",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["humanist", "calligraphic", "literary"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "familjen-grotesk-gelasio",
+    "heading": {
+      "slug": "Familjen Grotesk",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["grotesque", "swedish", "quirky"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Gelasio",
+      "role": "body",
+      "category": "serif",
+      "tags": ["georgia-adjacent", "sturdy", "transitional"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "gloock-noto-serif",
+    "heading": {
+      "slug": "Gloock",
+      "role": "heading",
+      "category": "display",
+      "tags": ["high-contrast", "contemporary", "display"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Noto Serif",
+      "role": "body",
+      "category": "serif",
+      "tags": ["workhorse", "pan-script", "transitional"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "trirong-sarabun",
+    "heading": {
+      "slug": "Trirong",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["looped", "thai-latin", "classical"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Sarabun",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["clean", "thai-latin", "even"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "besley-ubuntu-sans",
+    "heading": {
+      "slug": "Besley",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["clarendon", "sturdy", "friendly"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Ubuntu Sans",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["humanist", "expanded-family", "contemporary"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "instrument-serif-instrument-sans",
+    "heading": {
+      "slug": "Instrument Serif",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["condensed", "fashion", "brittle"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Instrument Sans",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["grotesque", "neutral", "modern"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  },
+  {
+    "id": "amiri-karla",
+    "heading": {
+      "slug": "Amiri",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["naskh", "bookish", "calligraphic"],
+      "weights": [700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Karla",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["grotesque", "quirky", "upright"],
+      "weights": [400, 700],
+      "italic": true
+    }
+  },
+  {
+    "id": "red-hat-display-judson",
+    "heading": {
+      "slug": "Red Hat Display",
+      "role": "heading",
+      "category": "sans-serif",
+      "tags": ["friendly", "open", "corporate"],
+      "weights": [600, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Judson",
+      "role": "body",
+      "category": "serif",
+      "tags": ["quiet", "scholarly", "generous"],
+      "weights": [400, 700],
+      "italic": false
+    }
+  },
+  {
+    "id": "young-serif-onest",
+    "heading": {
+      "slug": "Young Serif",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["chunky", "contemporary", "soft-brutal"],
+      "weights": [400],
+      "italic": false
+    },
+    "body": {
+      "slug": "Onest",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["geometric", "russian-born", "even"],
+      "weights": [400, 500],
+      "italic": false
+    }
+  },
+  {
+    "id": "baskervville-asap",
+    "heading": {
+      "slug": "Baskervville",
+      "role": "heading",
+      "category": "serif",
+      "tags": ["transitional", "bookish", "spencerian"],
+      "weights": [500, 700],
+      "italic": false
+    },
+    "body": {
+      "slug": "Asap",
+      "role": "body",
+      "category": "sans-serif",
+      "tags": ["humanist", "round-terminal", "sturdy"],
+      "weights": [400, 500],
+      "italic": true
+    }
+  }
+]

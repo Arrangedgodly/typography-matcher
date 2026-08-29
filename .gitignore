@@ -4,6 +4,10 @@ node_modules/
 # Build output
 dist/
 
+# E2E (T16) — Playwright failure artifacts
+test-results/
+playwright-report/
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

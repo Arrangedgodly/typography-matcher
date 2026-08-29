@@ -1,0 +1,365 @@
+/*
+ * T07 — The Examination Room chrome (world commit, seed fab7b459).
+ *
+ * ONE CORD (design-brief raise): the red–green duochrome judgment bar is the
+ * ONLY accent in the chrome. Every other surface is the clinical neutral
+ * ground — bone / instrument-black — so any judged pairing can star.
+ *
+ * Contrast (WCAG, computed at commit): ink #14181A on bone #F2EEE6 15.4:1 ·
+ * soft ink #57534B on bone 6.6:1 · sheet text #FBF9F4 on cord red #C1272D
+ * 5.6:1 and on cord green #1D7A4D 5.1:1 · cord text on bone 5.1:1 / 4.6:1.
+ * Chrome text never sits below 4.5:1 (town-hall criterion 6).
+ *
+ * No eye-chart letterforms: progress is ticks + tabular numerals. Motion is
+ * T09's lens-swap moment; the only animation here is T08's snap-step settle
+ * of the swipe release (stepped, reduced-motion-aware), and states restyle
+ * in place.
+ */
+
+.examination-room {
+  /* Palette — The Examination Room family (direction-card anchors, verified). */
+  --bone: #f2eee6;
+  --sheet: #fbf9f4;
+  --ink: #14181a;
+  --ink-soft: #57534b;
+  --hairline: #d9d2c3;
+  --cord-red: #c1272d;
+  --cord-red-hover: #ad2228;
+  --cord-green: #1d7a4d;
+  --cord-green-hover: #156340;
+
+  /* The chrome's own face: a workhorse UI face (no chart-letterform
+     spectacle) — declared statically in index.html alongside the pairing
+     loader's dynamic css2 links. */
+  --font-chrome: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto; /* strip / lane / judgment bar */
+  position: relative; /* T11: the prescription view overlays the room in place */
+  height: 100vh;
+  height: 100svh;
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-chrome);
+}
+
+/* --- Instrument strip ----------------------------------------------------- */
+
+.lane-strip {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.lane-strip-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1.75rem;
+  padding: 0.8rem clamp(1rem, 2.5vw, 2rem) 0.65rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
+.lane-wordmark {
+  margin: 0;
+  font-weight: 600;
+}
+
+.lane-wordmark-sub {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.lane-markers {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* Distance markers: a graduated rail — filled ticks are examined pairings,
+   the tall tick is the page currently on the wall. Low-salience by design. */
+.marker-rail {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 12px;
+}
+
+.marker-tick {
+  width: 3px;
+  height: 8px;
+  box-shadow: inset 0 0 0 1px var(--ink-soft);
+}
+
+.marker-tick.seen {
+  height: 8px;
+  background: var(--ink-soft);
+  box-shadow: none;
+}
+
+.marker-tick.current {
+  height: 12px;
+  background: var(--ink);
+  box-shadow: none;
+}
+
+.marker-count,
+.lane-prescription {
+  margin: 0;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* T11 — the prescription ledger is also the route to the reveal: quiet
+   chrome text that turns clearly interactive on hover/focus, never loud
+   (ONE CORD holds — no accent here; the count carries no names, ever). */
+.lane-prescription {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-chrome);
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.lane-prescription:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.3em;
+}
+
+/* --- First-run protocol explainer (one line; dismissal persisted by T10) --- */
+/* The exhaustion notice (T08, D7), the swap-error notice (T09), and the
+   storage-degraded notice (T10, criterion 7) share the same strip-row
+   anatomy: a one-line status + (where there is an act) one pill. All restyle
+   the strip in place; none moves the judged content. The storage notice has
+   no act on purpose — it is non-blocking by contract. */
+
+.lane-explainer,
+.lane-exhausted,
+.lane-storage-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
+  padding: 0.6rem clamp(1rem, 2.5vw, 2rem) 0.85rem;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.82rem;
+}
+
+/* Author display rules would override the hidden attribute's display none. */
+.lane-exhausted[hidden],
+.lane-storage-notice[hidden] {
+  display: none;
+}
+
+.lane-explainer-text,
+.lane-exhausted-text,
+.lane-storage-notice-text {
+  margin: 0;
+  color: var(--ink);
+}
+
+.lane-explainer-dismiss,
+.lane-exhausted-reshuffle {
+  margin: 0;
+  padding: 0.32em 1.05em;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-chrome);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.lane-explainer-dismiss:hover,
+.lane-exhausted-reshuffle:hover {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+/* --- The acuity lane ------------------------------------------------------- */
+
+.acuity-lane {
+  min-height: 0; /* lets the lane scroll inside, per the grid's 1fr row */
+  overflow-y: auto; /* inner scroll: mobile's reading mode; desktop safety valve */
+  overflow-x: hidden; /* swipe translations must never mint a horizontal bar */
+  /* Intent separation by construction (T08, design-brief §6): vertical touch
+     panning stays native — the browser takes the gesture and the swipe aborts
+     on pointercancel — while horizontal drags belong to the swipe controller.
+     Scroll intent wins; the swipe never fights reading. */
+  touch-action: pan-y;
+  display: flex;
+  justify-content: center;
+  padding: clamp(0.75rem, 1.6vh, 1.25rem) clamp(0.75rem, 2vw, 1.5rem)
+    clamp(0.85rem, 1.8vh, 1.35rem);
+  scrollbar-width: thin;
+  scrollbar-color: #9a9285 transparent;
+  cursor: grab; /* the card chrome is draggable — a quiet promise */
+}
+
+/* The reading surface keeps its text cursor: mouse drags there belong to
+   selection, not judgment (the controller excludes them too). */
+.acuity-lane .dummy-sheet {
+  cursor: auto;
+}
+
+.acuity-lane.is-swiping {
+  cursor: grabbing;
+}
+
+/* The essay as chart sheet: bone-white paper floating on the lane wall.
+   Elevation declared once — a shadow, no border (craft floor). */
+.examination-room .dummy-frame {
+  width: min(74rem, 100%);
+  background: var(--sheet);
+  border-radius: 12px;
+  padding: clamp(1.1rem, 1.2vh + 0.9vw, 2.2rem) clamp(1.4rem, 1vw + 1.2rem, 2.75rem);
+  box-shadow:
+    0 1.4rem 3.2rem rgba(20, 24, 26, 0.14),
+    0 0.2rem 0.55rem rgba(20, 24, 26, 0.08);
+}
+
+/* --- Swipe drag feedback (T08) ------------------------------------------------
+   While horizontal intent is locked, the paper follows the pointer through
+   an inline transform (gestures.ts) — 1:1 with rubber-band resistance, and
+   never transitioned: direct manipulation is not animation. On release it
+   settles in DISCRETE STEPS — SNAP-STEP, nothing glides — the input's own
+   confirmation detent. The full lens-swap choreography (occluder blink,
+   whole-card advance) is T09's motion layer; T08 ships only this settle.
+   prefers-reduced-motion collapses the settle to an instant. */
+
+.dummy-frame.is-swiping {
+  will-change: transform;
+  user-select: none; /* a locked drag owns the gesture; selection does not */
+}
+
+.dummy-frame.is-settling {
+  transition: transform 160ms steps(3, end);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dummy-frame.is-settling {
+    transition: none;
+  }
+}
+
+/* --- Judgment bar — ONE CORD ------------------------------------------------ */
+
+.judgment-bar {
+  display: flex;
+  justify-content: center;
+  padding: 0.8rem 1rem calc(0.8rem + env(safe-area-inset-bottom, 0px));
+}
+
+.judge {
+  flex: 1 1 11rem;
+  max-width: 16rem;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65em;
+  padding: 0.95em 1.4em;
+  border: 0;
+  font-family: var(--font-chrome);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fbf9f4;
+  cursor: pointer;
+}
+
+.judge-skip {
+  background: var(--cord-red);
+  border-radius: 8px 0 0 8px;
+}
+
+.judge-save {
+  background: var(--cord-green);
+  border-radius: 0 8px 8px 0;
+}
+
+.judge-skip:hover:not(:disabled) {
+  background: var(--cord-red-hover);
+}
+
+.judge-save:hover:not(:disabled) {
+  background: var(--cord-green-hover);
+}
+
+.judge-hint {
+  font-size: 0.78em;
+  font-weight: 500;
+}
+
+/* Loading + exhaustion + swap-error + the T17 explainer gate: STATES IN PLACE
+   — the bar restyles weight/outline in place (outlined cord text instead of
+   solid fills); its geometry, and everything above it, never moves for state.
+   T09's data-state='error' (failed font gate) shares the exact restyle, and
+   data-explainer='true' (fresh visit, protocol notice standing) stands the
+   bar down the same way until "Begin examination" opens the instrument. */
+.examination-room:is(
+    [data-state='loading'],
+    [data-state='error'],
+    [data-exhausted='true'],
+    [data-explainer='true']
+  )
+  .judge {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+
+.examination-room:is(
+    [data-state='loading'],
+    [data-state='error'],
+    [data-exhausted='true'],
+    [data-explainer='true']
+  )
+  .judge-skip {
+  color: var(--cord-red);
+}
+
+.examination-room:is(
+    [data-state='loading'],
+    [data-state='error'],
+    [data-exhausted='true'],
+    [data-explainer='true']
+  )
+  .judge-save {
+  color: var(--cord-green);
+}
+
+.examination-room[data-state='loading'] .judge-hint {
+  visibility: hidden; /* keeps the label centered without reflow */
+}
+
+/* --- Browser surfaces (craft floor) ---------------------------------------- */
+
+::selection {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.examination-room :focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* --- Narrow viewports ------------------------------------------------------- */
+
+@media (max-width: 48rem) {
+  .lane-wordmark-sub,
+  .marker-rail {
+    display: none; /* keep the strip one thin line; the count keeps the facts */
+  }
+
+  .judge {
+    flex-basis: 9rem;
+  }
+}

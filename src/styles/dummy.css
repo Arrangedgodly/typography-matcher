@@ -1,0 +1,157 @@
+/*
+ * T05 — dummy page structural styles (scale-clamped by T07).
+ *
+ * Pairing application is variables-only (src/components/dummyPage.ts →
+ * applyPairing): every face and weight below is consumed exclusively through
+ * the :root custom properties, whose defaults here are kindred system
+ * fallbacks for the pre-load / offline page. This file is STRUCTURE ONLY —
+ * the Examination Room chrome, palette, and motion (T07/T09) restyle around
+ * it (see styles/chrome.css); layout stays honest and chrome-agnostic.
+ *
+ * One-viewport desktop fit (design-brief §6, T07 gate): the page now fills
+ * the acuity-lane row the chrome frames, and the typographic scale below is
+ * clamped so the WHOLE essay + judgment bar sit in one viewport at
+ * ~1280×800 — with headroom for wide families (the scale ceilings, not the
+ * samples, are the budget; the lane's overflow scroll is the safety valve
+ * for anything wider still). Reading measure stays ~60–75ch (per-face `ch`
+ * adapts the measure to each pairing's widths).
+ */
+
+:root {
+  /* Pairing surface — written by applyPairing inside T04's gate. */
+  --font-heading: Georgia, 'Times New Roman', Times, serif;
+  --font-body: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --weight-heading: 700;
+  --weight-heading-soft: 600;
+  --weight-body: 400;
+  --weight-body-strong: 600;
+  --quote-font-style: italic;
+}
+
+.dummy-page {
+  flex: 1; /* fill the acuity lane's width (chrome owns the frame) */
+  display: flex;
+  align-items: flex-start; /* with the frame's auto margins: centers when it */
+  justify-content: center; /* fits, top-anchors when the lane must scroll —
+                              align-items:center would clip the sheet's top
+                              out of scroll reach on narrow viewports */
+}
+
+.dummy-frame {
+  margin-block: auto; /* graceful centering: floors at 0 when content is taller */
+}
+
+.dummy-frame {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.9rem, 1.8vh, 1.5rem);
+}
+
+/* --- UI-chrome microcopy (essay.ui): small-type habitat, judged with the rest --- */
+
+.dummy-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dummy-nav-label,
+.dummy-button {
+  font-family: var(--font-body);
+  font-weight: var(--weight-body-strong);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.dummy-button {
+  margin: 0;
+  padding: 0.55em 1.15em;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dummy-button:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+/* --- The editorial spread: display rail + reading column --- */
+
+.dummy-sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 3.5vw, 3.25rem);
+  align-items: start;
+}
+
+.dummy-rail {
+  display: grid;
+  gap: clamp(0.9rem, 1.9vh, 1.4rem);
+}
+
+.dummy-headline {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading);
+  font-size: clamp(1.9rem, 1.15rem + 1.9vw, 2.85rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.dummy-standfirst {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading-soft);
+  font-size: clamp(1rem, 0.92rem + 0.35vw, 1.18rem);
+  line-height: 1.45;
+  opacity: 0.92;
+}
+
+.dummy-quote {
+  margin: 0;
+  padding-inline-start: 1.2em;
+  border-inline-start: 2px solid currentColor;
+  font-family: var(--font-body);
+  font-style: var(--quote-font-style);
+  font-weight: var(--weight-body);
+  font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.28rem);
+  line-height: 1.42;
+}
+
+.dummy-body {
+  display: grid;
+  gap: 0.95em;
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+}
+
+.dummy-body p {
+  margin: 0;
+  font-size: clamp(0.95rem, 0.88rem + 0.3vw, 1.05rem);
+  line-height: 1.58;
+  max-width: 66ch;
+  text-wrap: pretty;
+}
+
+.dummy-caption {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  opacity: 0.72;
+}
+
+/* Narrow viewports: rail stacks above the body column; the lane scrolls
+   internally (chrome.css's .acuity-lane) — inner-scroll mobile per plan. */
+@media (max-width: 56rem) {
+  .dummy-sheet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

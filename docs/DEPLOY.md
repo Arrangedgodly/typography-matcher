@@ -1,76 +1,38 @@
-# Deploy — GitHub Pages
+# Deploy — font.graydonwasil.com (GitHub Pages + Cloudflare DNS)
 
-**This is the halt gate.** Everything up to publishing is done and committed:
-the repo is clean, `main` holds the full history, the deploy workflow
-(`.github/workflows/deploy.yml`) is in place, and the production build has
-been verified to serve from the `/typography-matcher/` subpath locally.
+## Current state (2026-08-29)
 
-**Nothing has been pushed and no GitHub repo has been created.** Publishing
-is a deliberate act you take by hand below. Once you push, every future push
-to `main` auto-deploys.
+- Repo: https://github.com/Arrangedgodly/typography-matcher (pushed, `main`, auto-deploys on push)
+- GitHub Pages: enabled, source = GitHub Actions, custom domain `font.graydonwasil.com` attached (API, 204)
+- Deploy workflow `.github/workflows/deploy.yml`: `npm ci` → `validate:fonts` → `npm test` → `npm run build` → upload `dist/` → `actions/deploy-pages`. E2E stays a local gate (drives system Chrome over the live Google Fonts network).
+- Build shape: `vite.config.ts` `base: '/'` + `public/CNAME` (dist carries the hostname) — served from the domain root. Verified locally: build exit 0, 134 unit tests, 2 e2e journeys, preview serves at `/`.
+- REMAINING: the Cloudflare DNS record (user step — no Cloudflare API access on the build machine), then Enforce HTTPS.
 
-## What was verified locally (T18, 2026-08-28)
+## User DNS step — Cloudflare dashboard → graydonwasil.com → DNS
 
-- `npm run build` → exit 0; `dist/index.html` asset URLs are
-  `/typography-matcher/assets/…` (from `vite.config.ts` `base`).
-- `vite preview` → index 200, JS 200, CSS 200 at
-  `http://localhost:<port>/typography-matcher/`.
-- A plain static server (`python3 -m http.server`) with the app nested under
-  a `typography-matcher/` directory — the same shape as a GitHub Pages
-  project site — serves index and both hashed assets at 200, with a 404
-  sanity check confirming the subpath is what resolves.
+1. Add record: **CNAME `font` → `arrangedgodly.github.io`**
+2. Set it **DNS-only (grey cloud)** for now — GitHub must resolve the CNAME directly to issue its Let's Encrypt certificate. Cloudflare defaults new records to Proxied; toggle the cloud OFF.
+3. Minutes-to-an-hour later, GitHub's cert shows Ready. Then, optionally:
+   - **Enforce HTTPS**: repo Settings → Pages → tick *Enforce HTTPS* (or `PUT /repos/Arrangedgodly/typography-matcher/pages` with `{"https_enforced": true}` once the cert is Ready).
+   - **Orange-cloud proxy, if wanted**: only AFTER the GitHub cert is issued, and set Cloudflare SSL/TLS → **Full (strict)**. *Flexible* mode causes redirect loops with GitHub Pages; *Full (strict)* works fine.
 
-## What the workflow does on push to `main`
+If the Pages settings page reports the domain as unverified, add the TXT record it displays
+(`_github-pages-challenge-Arrangedgodly.font`) — personal-account repo domains usually skip
+this, but GitHub asks on some accounts.
 
-`npm ci` → `npm run validate:fonts` (Node 24 — the validator type-strips
-`.ts` imports, needing Node ≥ 23.6) → `npm test` → `npm run build` → upload
-`dist/` → deploy via `actions/deploy-pages`. E2E is deliberately not in CI
-(it drives the machine's system Chrome over the real Google Fonts network);
-run `npm run test:e2e` locally before publishing if you want the full gate.
+## Reference — what was executed (2026-08-29)
 
-## Publish sequence A — GitHub web UI
-
-1. Create the repo at <https://github.com/new>:
-   - Owner: yours. Name: **`typography-matcher`** (the name is load-bearing —
-     the Pages URL and the Vite base both derive from it).
-   - Public or private (Pages on private repos requires a paid plan).
-   - Do **not** add README / .gitignore / license — the local repo has all
-     content and a stray initial commit would need reconciling.
-2. Wire the remote and push (first push = the halt-gate act):
-   ```sh
-   git remote add origin git@github.com:YOUR_USERNAME/typography-matcher.git
-   # or: git remote add origin https://github.com/YOUR_USERNAME/typography-matcher.git
-   git push -u origin main
-   ```
-3. Enable Pages with the Actions source: repo **Settings → Pages →
-   Build and deployment → Source: GitHub Actions**.
-4. The push in step 2 already triggered the workflow. If its deploy step ran
-   before step 3 finished (first-run race, the deploy fails until the source
-   is set), re-run it: **Actions → "Deploy to GitHub Pages" → latest run →
-   Re-run all jobs**. (Alternatively do step 3 before step 2 and there is no
-   race.)
-5. Verify: open `https://YOUR_USERNAME.github.io/typography-matcher/` —
-   the examination-room first viewport should land; DevTools network shows
-   `/typography-matcher/assets/*.js|css` at 200.
-
-## Publish sequence B — gh CLI (equivalent)
-
-```sh
-gh auth status          # be logged in first (gh auth login)
-# The next command creates the repo AND pushes — this is the halt-gate act:
-gh repo create typography-matcher --public --source . --remote origin --push
-
-# Point Pages at the Actions source (same as the Settings toggle in A3):
-gh api repos/:owner/typography-matcher/pages -X POST -f build_type=workflow
-
-# If the first run predates the line above, re-run it:
-gh run watch            # or: gh workflow run deploy.yml
+```bash
+git remote add origin git@github.com:Arrangedgodly/typography-matcher.git
+git push -u origin main
+# Pages enable + custom domain (token with repo scope, from git credential store):
+curl -X POST https://api.github.com/repos/Arrangedgodly/typography-matcher/pages \
+  -H "Authorization: token <TOKEN>" -d '{"build_type":"workflow"}'
+curl -X PUT https://api.github.com/repos/Arrangedgodly/typography-matcher/pages \
+  -H "Authorization: token <TOKEN>" \
+  -d '{"cname":"font.graydonwasil.com","build_type":"workflow","source":{"branch":"main","path":"/"}}'
 ```
 
-## After publishing
-
-- Every push to `main` re-runs validation + tests + build and auto-deploys.
-- Renaming the repo changes the Pages URL — update `base` in
-  `vite.config.ts` to match (or serve a user-site at `/` with `base: '/'`).
-- A custom domain is out of scope here; it would also change the effective
-  base path.
+Local verification (all green): `npm run build` exit 0 (dist root carries `CNAME`); `npm test`
+134/134; `npm run test:e2e` 2/2 (root-path preview, scratch-port overlay); `vite preview` 200s
+at `/`.

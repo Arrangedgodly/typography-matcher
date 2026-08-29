@@ -33,6 +33,22 @@ Started: 2026-08-28
 - plan.md: user-approved 2026-08-28 ("Approve plan").
 - R1 disposition: auto-approved (ultron-supreme) — evidence: research/R1-pairing-provenance.md.
 - R2 disposition: auto-approved (ultron-supreme) — evidence: research/R2-font-loading.md.
+- T01: auto-approved (ultron-supreme), evidence: production-log.md
+- T02: auto-approved (ultron-supreme), evidence: production-log.md
+- T03: auto-approved (ultron-supreme), evidence: production-log.md
+- T04: auto-approved (ultron-supreme), evidence: production-log.md
+- T05: auto-approved (ultron-supreme), evidence: production-log.md
+- T06: auto-approved (ultron-supreme), evidence: production-log.md
+- T07: auto-approved (ultron-supreme), evidence: production-log.md
+- T08: auto-approved (ultron-supreme) after 1 failed verification + fix (evidence: production-log.md)
+- T09: auto-approved (ultron-supreme), evidence: production-log.md
+- T10: auto-approved (ultron-supreme), evidence: production-log.md
+- T11: auto-approved (ultron-supreme), evidence: production-log.md
+- T12: auto-approved (ultron-supreme), evidence: production-log.md
+- T15: auto-approved (ultron-supreme), evidence: production-log.md
+- T14: auto-approved (ultron-supreme), evidence: production-log.md
+- T16: auto-approved (ultron-supreme), evidence: production-log.md
+- T17: auto-approved (ultron-supreme), evidence: production-log.md
 
 ## Decision matrix (research)
 
@@ -48,6 +64,6 @@ Started: 2026-08-28
 
 ## Next action
 
-Run `$production-supreme`: execute plan.md task-by-task (workers + verifiers, auto-approve each, dispatch next immediately). First dispatch: T01. Watch: task cap 20 dispatches; halt on double consecutive failure; publish halt at T18.
+T18 awaiting verification. Delivered 2026-08-28: production build re-proven to serve from the `/typography-matcher/` subpath TWO ways (`vite preview` AND a plain static server with the app nested under the subpath — index + both hashed assets 200, 404 sanity); `.github/workflows/deploy.yml` added (standard actions/deploy-pages pattern on push to main + workflow_dispatch; Node 24 pinned — validate-fonts needs ≥ 23.6; CI runs `validate:fonts` + `npm test` + `npm run build`; e2e stays local by design — system Chrome over real network); `docs/DEPLOY.md` records the exact publish sequences (GitHub web UI + gh CLI alternative) with the halt-gate framing; ALL working-tree changes (the run's T02–T17 output, uncommitted by convention) committed on `main` as three conventional commits — repo clean, `git remote -v` empty, NOTHING pushed. Gates at commit time: `npm run build` exit 0; `npm test` 134/134; `npm run test:e2e` 2/2 GREEN (run via a /tmp scratch-port config overlay — a FOREIGN project's stale `vite preview` holds the config's port 4317; repo config untouched, its port-honesty rule honored); workflow YAML parse-validated (js-yaml; actionlint not installed locally). Publishing remains the user's explicit decision (halt gate; D8) — after T18 verification, the run ends at the user halt, not at a push.
 
-Task dispatch count: 0 / 20
+Task dispatch count: 10 / 20

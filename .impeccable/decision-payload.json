@@ -1,0 +1,118 @@
+{
+  "title": "Choose the visual world",
+  "question": "The roll assigned The Examination Room. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "The Examination Room",
+      "kicker": "THE ROLL",
+      "lineage": "the optician's exam: phoropter dials, acuity lane, Snellen red-green bar",
+      "thesis": "Pairings judged the way lenses are — 'which is better, one or two?' — identities withheld until the prescription is written.",
+      "palette": ["#F2EEE6", "#14181A", "#C1272D", "#1D7A4D"],
+      "materials": ["phoropter dials", "acuity-lane distance markers", "trial-lens tray", "Snellen red-green bar"],
+      "viewport": "The typography essay fills the acuity lane under thin clinical chrome; judgment rides a red-green bar — green saves, red skips.",
+      "risk": "Eye-chart letterforms in the chrome would compete with the very faces being judged; charts appear only as abstracted devices.",
+      "raised": [
+        { "from": "operate-c-depot-blind-courses", "raise": "SNAP-STEP DECK — the deck advances in whole card-heights with a one-step overshoot and settle; nothing glides." },
+        { "from": "kinetic-sculpture-automata-tensegrity-breathing-column", "raise": "LEADER-LINE REVEAL — the saved list pins role labels to specimens along engineering leader lines." },
+        { "from": "textiles-weave-drape-fashion-drawcord-transforming-cape", "raise": "ONE CORD — a single accent mechanism reserved exclusively for judgment controls, never decoration." },
+        { "from": "variety-telop-caption-field", "raise": "STATES IN PLACE — loading, exhausted, and saved states restyle weight and outline in place; content never moves for state." }
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "The Composing Room",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "letterpress composing room: type cases, galley proofs, composing sticks",
+      "thesis": "Every pairing pulled as an anonymous galley proof — undecorated ink on paper, the original blind test of type.",
+      "palette": ["#1B1712", "#EFE9DD", "#8C2F1B"],
+      "materials": ["metal sorts", "galley and stone", "quoins and furniture", "proofing ink"],
+      "viewport": "The essay as a freshly pulled proof on the stone; deck controls as composing-stick actions beside the galley.",
+      "risk": "Nearest neighbor to the specimen-book rut every font tool ships — the most likely place this category lands."
+    },
+    {
+      "id": "challenger-hardware",
+      "label": "The Bench Instrument",
+      "verdict": "wins",
+      "lineage": "creator hardware: dye-sub keycaps, knurled knobs, amber status screen",
+      "thesis": "The matcher as a desk instrument: one safety-orange key commits a save, a knurled knob steps the deck, an amber screen reports state.",
+      "palette": ["#E8E4DA", "#C9C4B8", "#2A2D31", "#E8590C"],
+      "materials": ["dye-sub keycaps", "knurled aluminum", "amber status screen"],
+      "viewport": "The essay on a bone-white plate above a keycap grid; the orange SAVE key under the index finger is obviously the point.",
+      "case": "Wins both axes: creator hardware is this audience's native aesthetic, and an instrument panel maps save, skip, and status without competing with the judged faces.",
+      "risk": "Tool-monoculture danger — without the one-asymmetry discipline it collapses into a generic dashboard.",
+      "hero": "https://impeccable.style/worlds/cards/design-canon-creator-hardware-bench-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/design-canon-creator-hardware-bench.webp"
+    },
+    {
+      "id": "challenger-splitflap",
+      "label": "The Departure Board",
+      "verdict": "competitive",
+      "lineage": "rail concourse split-flap boards",
+      "thesis": "Every pairing swap runs as a per-character flap cascade — the mechanical letter change is the show.",
+      "palette": ["#101214", "#F5F3EE", "#E8A13C", "#B3372F"],
+      "materials": ["split-flap cells", "brushed steel frame", "row lamps"],
+      "viewport": "The essay set in flap cells; judgment as row states — a green lamp saves the row.",
+      "case": "Holds identification — designers revere mechanical letterforms — but loses clarity: departure semantics carry nothing about blind judgment.",
+      "risk": "The cascade becomes decoration if a swap ever takes longer than a second.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-split-flap-concourse-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/signals-instruments-split-flap-concourse.webp"
+    },
+    {
+      "id": "challenger-depot",
+      "label": "The Depot Blind",
+      "verdict": "declined",
+      "lineage": "depot destination blinds: dyed duck cloth courses",
+      "palette": ["#173B2C", "#E3B50B", "#F1ECDF"],
+      "materials": ["duck cloth", "chrome-yellow legends", "eyelet tape"],
+      "case": "Fuses poorly: depot blinds are alien to font judging.",
+      "kept": "Snap-step deck motion with overshoot-settle.",
+      "hero": "https://impeccable.style/worlds/cards/operate-c-depot-blind-courses-hero.webp"
+    },
+    {
+      "id": "challenger-tensegrity",
+      "label": "The Tensegrity Column",
+      "verdict": "declined",
+      "lineage": "kinetic sculpture: carbon rods and red cord",
+      "palette": ["#D8D4CC", "#1C1E20", "#C0261F"],
+      "materials": ["carbon rods", "tension cord", "node annotations"],
+      "case": "Strut-network layout fights a reading surface.",
+      "kept": "Leader-line annotations for the reveal.",
+      "hero": "https://impeccable.style/worlds/cards/kinetic-sculpture-automata-tensegrity-breathing-column-hero.webp"
+    },
+    {
+      "id": "challenger-cape",
+      "label": "The Drawcord Cape",
+      "verdict": "declined",
+      "lineage": "textiles: silk cape with hidden drawcord channels",
+      "palette": ["#141414", "#C9A227", "#3A3F44"],
+      "materials": ["matte silk", "gold drawcord", "channel stitching"],
+      "case": "Cloth transformation is not evaluation.",
+      "kept": "One accent cord reserved for controls.",
+      "hero": "https://impeccable.style/worlds/cards/textiles-weave-drape-fashion-drawcord-transforming-cape-hero.webp"
+    },
+    {
+      "id": "challenger-telop",
+      "label": "The Telop Field",
+      "verdict": "declined",
+      "lineage": "variety-show caption fields",
+      "palette": ["#F2C400", "#D9332A", "#101010"],
+      "materials": ["outlined captions", "chroma fills", "drop shadows"],
+      "case": "Caption chaos competes with the judged faces.",
+      "kept": "States restyle in place, never move.",
+      "hero": "https://impeccable.style/worlds/cards/variety-telop-caption-field-hero.webp"
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "buildPath": { "value": "code", "toggle": false },
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "What font tools ship: a clean specimen card, system sans, two buttons, a saved-list page — executed impeccably.",
+    "palette": ["#ffffff", "#111827", "#2563eb"],
+    "materials": ["clean grid", "soft shadows"],
+    "viewport": "A centered specimen card with save/skip pills and a separate saved-list page.",
+    "risk": "Indistinguishable from every other pairing gallery by design."
+  },
+  "steer": true
+}

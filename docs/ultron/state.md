@@ -10,7 +10,7 @@ Started: 2026-08-28
 - [x] design (impeccable) — COMPLETE (PRODUCT.md written; stack = Vite+TS (user-chosen); direction locked via decision page: The Examination Room, seed fab7b459, assigned kept, no steer; build path code-led (no image gen available) recorded in .impeccable/config.json; shape brief user-confirmed at docs/ultron/design-brief.md)
 - [x] plan-it-out — COMPLETE (plan.md user-approved 2026-08-28; 18 tasks, 6 milestones; single plan review done)
 - [x] deep-research-supreme — COMPLETE (2026-08-28; two tracks, both committed, no conflicts)
-- [ ] production-supreme — IN PROGRESS (started 2026-08-28)
+- [x] production-supreme — COMPLETE (2026-08-28; T01–T18 all verified; publish halt gate stands — nothing pushed, remote empty)
 - [ ] ultron-impeccable (finishing) — pending
 
 ## Artifacts
@@ -49,6 +49,7 @@ Started: 2026-08-28
 - T14: auto-approved (ultron-supreme), evidence: production-log.md
 - T16: auto-approved (ultron-supreme), evidence: production-log.md
 - T17: auto-approved (ultron-supreme), evidence: production-log.md
+- T18: auto-approved (ultron-supreme), evidence: production-log.md
 
 ## Decision matrix (research)
 
@@ -64,6 +65,6 @@ Started: 2026-08-28
 
 ## Next action
 
-T18 awaiting verification. Delivered 2026-08-28: production build re-proven to serve from the `/typography-matcher/` subpath TWO ways (`vite preview` AND a plain static server with the app nested under the subpath — index + both hashed assets 200, 404 sanity); `.github/workflows/deploy.yml` added (standard actions/deploy-pages pattern on push to main + workflow_dispatch; Node 24 pinned — validate-fonts needs ≥ 23.6; CI runs `validate:fonts` + `npm test` + `npm run build`; e2e stays local by design — system Chrome over real network); `docs/DEPLOY.md` records the exact publish sequences (GitHub web UI + gh CLI alternative) with the halt-gate framing; ALL working-tree changes (the run's T02–T17 output, uncommitted by convention) committed on `main` as three conventional commits — repo clean, `git remote -v` empty, NOTHING pushed. Gates at commit time: `npm run build` exit 0; `npm test` 134/134; `npm run test:e2e` 2/2 GREEN (run via a /tmp scratch-port config overlay — a FOREIGN project's stale `vite preview` holds the config's port 4317; repo config untouched, its port-honesty rule honored); workflow YAML parse-validated (js-yaml; actionlint not installed locally). Publishing remains the user's explicit decision (halt gate; D8) — after T18 verification, the run ends at the user halt, not at a push.
+production phase complete — finishing phase (ultron-impeccable) next. T18 verified PASS 2026-08-28 by the independent ultron-supreme verifier: build exit 0, 134/134 tests, e2e 2/2 via verifier-owned scratch overlay (port 4327; foreign 4317 holder untouched), subpath serving proven two ways (nested static server + vite preview), deploy workflow parse- and structure-validated (push to main + workflow_dispatch, Node 24, validate:fonts → test → build before upload), DEPLOY.md carries the publish sequence + halt-gate framing, halt gate intact (`git remote -v` empty, tree clean, nothing pushed). Publishing remains the user's explicit halt-gate decision (D8) — docs/DEPLOY.md holds the exact sequence.
 
 Task dispatch count: 10 / 20

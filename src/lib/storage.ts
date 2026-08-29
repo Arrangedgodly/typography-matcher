@@ -64,6 +64,15 @@ export interface FlagStore {
   set(key: string, value: boolean): void
 }
 
+/**
+ * Small named string records (the on-wall pairing id, so a reload restores
+ * the examined pairing instead of consuming a new one). `null` ⇔ absent.
+ */
+export interface StringStore {
+  get(key: string): string | null
+  set(key: string, value: string): void
+}
+
 /** The storage surface the app consumes. */
 export interface AppStorage {
   /** T06's seen-set interface — hand straight to `createDeck`. */
@@ -72,6 +81,8 @@ export interface AppStorage {
   readonly saves: SavedListStore
   /** Boolean flags (explainer dismissal). */
   readonly flags: FlagStore
+  /** String records (the on-wall pairing id for reload-restore). */
+  readonly strings: StringStore
   /** `'local'` ⇔ records persist; `'memory'` ⇔ session-only. */
   readonly mode: StorageMode
   /** true ⇔ records will NOT survive a reload — the chrome's notice condition. */
@@ -96,11 +107,20 @@ export interface AppStorageOptions {
 /** Flag names for `AppStorage.flags` — the first-run explainer dismissal. */
 export const EXPLAINER_DISMISSED_FLAG = 'explainer-dismissed'
 
+/**
+ * String-record name for the on-wall pairing: written on every successful
+ * swap so a reload restores the SAME pairing (a refresh must never consume a
+ * fresh unseen pairing — that would be an implicit skip). Resolved against
+ * the bundled dataset at boot; a stale id falls back to a fresh draw.
+ */
+export const CURRENT_PAIRING_KEY = 'current-pairing'
+
 /** localStorage keys, namespaced and versioned (bump to invalidate records). */
 const KEYS = {
   seen: 'blind-test.seen.v1',
   saves: 'blind-test.saves.v1',
   flags: 'blind-test.flags.v1',
+  strings: 'blind-test.strings.v1',
   probe: 'blind-test.probe.v1',
 } as const
 
@@ -139,6 +159,16 @@ function parseFlags(raw: unknown): Record<string, boolean> {
     if (typeof value === 'boolean') flags[key] = value
   }
   return flags
+}
+
+/** Parse a persisted string record: keep string-valued entries, drop the rest. */
+function parseStrings(raw: unknown): Record<string, string> {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) return {}
+  const strings: Record<string, string> = {}
+  for (const [key, value] of Object.entries(raw)) {
+    if (typeof value === 'string') strings[key] = value
+  }
+  return strings
 }
 
 /**
@@ -265,6 +295,7 @@ export function createAppStorage(options: AppStorageOptions = {}): AppStorage {
   const seenSlot = createSlot(core, KEYS.seen, parseIdList, () => [] as string[])
   const savesSlot = createSlot(core, KEYS.saves, parseIdList, () => [] as string[])
   const flagsSlot = createSlot(core, KEYS.flags, parseFlags, () => ({}) as Record<string, boolean>)
+  const stringsSlot = createSlot(core, KEYS.strings, parseStrings, () => ({}) as Record<string, string>)
 
   return {
     seen: {
@@ -286,6 +317,12 @@ export function createAppStorage(options: AppStorageOptions = {}): AppStorage {
       get: (key) => flagsSlot.get()[key] === true,
       set: (key, value) => {
         flagsSlot.set({ ...flagsSlot.get(), [key]: value })
+      },
+    },
+    strings: {
+      get: (key) => stringsSlot.get()[key] ?? null,
+      set: (key, value) => {
+        stringsSlot.set({ ...stringsSlot.get(), [key]: value })
       },
     },
     get mode(): StorageMode {

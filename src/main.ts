@@ -9,7 +9,7 @@ import { renderDummyPage, applyPairing } from './components/dummyPage'
 import { pairings } from './data/pairings'
 import { createDeck } from './lib/deck'
 import { loadPairingFonts, releasePairingFonts, type FontLoadHandle } from './lib/fontLoader'
-import { createAppStorage, EXPLAINER_DISMISSED_FLAG } from './lib/storage'
+import { createAppStorage, EXPLAINER_DISMISSED_FLAG, CURRENT_PAIRING_KEY } from './lib/storage'
 import { createSavedListView } from './views/savedList'
 import type { Pairing } from './types'
 import { pairingFonts } from './types'
@@ -150,6 +150,39 @@ function recordSave(): void {
 }
 
 /**
+ * The one R2 swap sequence every mount of a pairing runs through — a fresh
+ * draw and the reload-restore both: cover, gate, variables, confirmed paint,
+ * release, reveal. Persists the on-wall pairing id (T10) so a reload can
+ * restore the SAME pairing instead of consuming a new one.
+ */
+async function swapTo(pairing: Pairing): Promise<void> {
+  swapping = true
+  chrome.coverSwap() // T09: occluder down for the whole load (previous pairing stays rendered beneath)
+  try {
+    const next = await loadPairingFonts(pairingFonts(pairing))
+    applyPairing(pairing) // variables only — faces already decoded
+    await nextFrame() // the swap has painted before the old faces are evicted
+    releasePairingFonts(currentHandle)
+    currentHandle = next
+    current = pairing
+    storage.strings.set(CURRENT_PAIRING_KEY, pairing.id)
+    chrome.updateMarkers(deck.stats())
+    chrome.revealSwap() // T09: reveal AFTER gate + double-rAF + confirmed paint + release
+  } catch (err) {
+    // Gate failure (4000 ms budget): the previous pairing stays on the wall —
+    // its variables were never touched — and the strip carries the
+    // recoverable error state with the retry act (T09). FontLoadError
+    // carries reason codes and slot/weight facts only (D6) — no family
+    // names — so this is safe to log where no name can leak.
+    console.warn('main: pairing failed to load — kept current', err)
+    chrome.updateMarkers(deck.stats()) // the failed draw consumed a pairing
+    chrome.failSwap()
+  } finally {
+    swapping = false
+  }
+}
+
+/**
  * Apply a judgment (or 'first' for the initial/reshuffle draw) and advance.
  *
  * ORDER IS LOAD-BEARING: the verdict is recorded on the on-wall pairing
@@ -171,30 +204,7 @@ async function advance(verdict: Verdict | 'first'): Promise<void> {
     chrome.setExhausted(true) // D7: the user reshuffles — never the deck
     return
   }
-  swapping = true
-  chrome.coverSwap() // T09: occluder down for the whole load (previous pairing stays rendered beneath)
-  try {
-    const pairing = draw.pairing
-    const next = await loadPairingFonts(pairingFonts(pairing))
-    applyPairing(pairing) // variables only — faces already decoded
-    await nextFrame() // the swap has painted before the old faces are evicted
-    releasePairingFonts(currentHandle)
-    currentHandle = next
-    current = pairing
-    chrome.updateMarkers(deck.stats())
-    chrome.revealSwap() // T09: reveal AFTER gate + double-rAF + confirmed paint + release
-  } catch (err) {
-    // Gate failure (4000 ms budget): the previous pairing stays on the wall —
-    // its variables were never touched — and the strip carries the
-    // recoverable error state with the retry act (T09). FontLoadError
-    // carries reason codes and slot/weight facts only (D6) — no family
-    // names — so this is safe to log where no name can leak.
-    console.warn('main: pairing failed to load — kept current', err)
-    chrome.updateMarkers(deck.stats()) // the failed draw consumed a pairing
-    chrome.failSwap()
-  } finally {
-    swapping = false
-  }
+  await swapTo(draw.pairing)
 }
 
 chrome.onJudge((verdict) => void advance(verdict))
@@ -210,12 +220,29 @@ chrome.onReshuffle(() => {
   if (swapping) return
   deck.reshuffle() // clears the seen-set (in memory + the store seam)
   chrome.setExhausted(false)
-  void advance('first')
+  void advance('first') // the fresh draw persists its own id as the on-wall pairing
 })
 
-// First pairing: the page renders on the system fallback stacks beneath the
-// occluder (born covered — no fallback-glyph window is ever judgeable), then
-// flips faces the moment the gate passes and the blind lifts on the reveal
-// (css2 display=block only affects text that already targets the family, and
-// no text does until applyPairing runs).
-void advance('first')
+// Boot: restore the on-wall pairing a previous session persisted, so a
+// reload returns to the SAME examination — a refresh must never consume a
+// fresh unseen pairing (that would be an implicit skip the user never
+// made). The id resolves against the bundled dataset (deck.recall is
+// read-only); a stale id, or no record at all, falls back to a fresh draw.
+// The page renders on the system fallback stacks beneath the occluder (born
+// covered — no fallback-glyph window is ever judgeable), then flips faces
+// the moment the gate passes and the blind lifts on the reveal (css2
+// display=block only affects text that already targets the family, and no
+// text does until applyPairing runs).
+async function boot(): Promise<void> {
+  const lastId = storage.strings.get(CURRENT_PAIRING_KEY)
+  const restore = lastId ? deck.recall(lastId) : null
+  if (restore) {
+    await swapTo(restore)
+    // A reload after the cycle closed re-parks in the D7 state: the last
+    // pairing stands, judgment is closed, Reshuffle is the user's act.
+    if (deck.stats().exhausted) chrome.setExhausted(true)
+    return
+  }
+  await advance('first')
+}
+void boot()

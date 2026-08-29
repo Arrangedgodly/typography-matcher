@@ -96,6 +96,14 @@ export interface Deck {
    * The returned `stats` are post-draw (the drawn pairing already counts as seen).
    */
   draw(): DrawResult
+  /**
+   * Look up a deck pairing by id WITHOUT drawing: no rng roll, no seen-set
+   * mutation, no store write. `null` when the id is not in the deck (stale
+   * persisted id — dataset changed between sessions). The reload-restore path
+   * uses this so a refresh re-mounts the on-wall pairing instead of
+   * consuming a new one (which would be an implicit skip).
+   */
+  recall(id: string): Pairing | null
   /** End the cycle and start a fresh one: clears seen in memory AND storage. */
   reshuffle(): void
   /** Current cycle counters. */
@@ -161,10 +169,14 @@ export function createDeck(pairings: readonly Pairing[], options: DeckOptions = 
     return { status: 'pairing', pairing, stats: stats() }
   }
 
+  function recall(id: string): Pairing | null {
+    return deck.find((pairing) => pairing.id === id) ?? null
+  }
+
   function reshuffle(): void {
     seen.clear()
     store.clear()
   }
 
-  return { draw, reshuffle, stats }
+  return { draw, recall, reshuffle, stats }
 }

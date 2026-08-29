@@ -167,17 +167,22 @@ describe('persistence across reload (T10 wiring)', () => {
 
     // --- RELOAD: fresh modules + fresh DOM over the same localStorage -----
     await bootApp()
-    await waitForSwap(3) // 2 seen restored + the boot draw = the full deck
+    // The reload RESTORES the on-wall pairing — no fresh draw is consumed
+    // (a refresh must never be an implicit skip): the count stands at 2.
+    await waitForSwap(2)
+    expect((readKey(SEEN_KEY) as string[])).toHaveLength(2) // nothing consumed
 
     expect(prescription()).toBe('Prescription · 1 saved') // the ledger resumed
     expect(document.querySelector('.lane-explainer')).toBeNull() // dismissal resumed
     expect(storageNotice().hidden).toBe(true) // storage is healthy
 
-    // The reloaded cycle is genuinely continued, not restarted: the deck is
-    // one draw from exhaustion, and the last on-wall pairing can still be saved.
-    saveButton().click()
-    await waitForExhausted()
+    // The reloaded cycle is genuinely continued, not restarted: one unseen
+    // pairing remains, and the restored on-wall pairing can still be saved.
+    saveButton().click() // the restore did not re-save it behind the user's back
+    await waitForSwap(3)
     expect(prescription()).toBe('Prescription · 2 saved')
+    skipButton().click() // the cycle-final pairing → exhaustion
+    await waitForExhausted()
     expect(markerCount()).toBe(`3 / ${DECK_SIZE} examined`)
 
     const savesAfter = readKey(SAVES_KEY) as string[]

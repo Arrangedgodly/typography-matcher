@@ -301,9 +301,9 @@ describe('prescription view (T11 wiring)', () => {
 
     // --- RELOAD: fresh modules + fresh DOM over the same localStorage -----
     await bootApp()
-    // 2 seen restored (boot draw + the save's draw) + the resumed boot draw
-    // = the full deck, continued without repeats.
-    await waitForSwap(3)
+    // The reload RESTORES the on-wall pairing without consuming a draw —
+    // a refresh must never be an implicit skip — so the count stands at 2.
+    await waitForSwap(2)
 
     expect(prescriptionButton().textContent).toBe('Prescription · 1 saved')
     expect(namesInDom()).toEqual([]) // resumed ledger, still name-free

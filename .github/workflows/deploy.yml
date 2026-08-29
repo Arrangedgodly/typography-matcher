@@ -1,0 +1,73 @@
+# T18 — Deploy to GitHub Pages (actions/deploy-pages pattern).
+#
+# This file is repo CONTENT only: it defines what happens AFTER the user
+# pushes. Nothing here creates a remote or pushes anything — publishing is
+# the user's halt-gate decision (docs/DEPLOY.md holds the exact sequence).
+#
+# Notes:
+# - Node is pinned to 24: scripts/validate-fonts.mjs type-strips .ts imports
+#   directly, which needs Node >= 23.6 (T15).
+# - vite.config.ts already sets base '/typography-matcher/', matching the
+#   GitHub Pages project-site URL https://<owner>.github.io/typography-matcher/.
+# - E2E (npm run test:e2e) is intentionally NOT run here: it drives the
+#   machine's system Chrome over the real Google Fonts network (channel:
+#   'chrome') — it stays a local gate (T16), not a CI one.
+# - If Pages is not yet enabled with "GitHub Actions" as source, the deploy
+#   step fails on first run; enable it (Settings → Pages, or the gh api call
+#   in docs/DEPLOY.md) and re-run the workflow.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node 24
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate Google Fonts dataset
+        run: npm run validate:fonts
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

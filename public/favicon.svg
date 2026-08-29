@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Favicon: the site's signature duochrome judgment bar —
+       skip red / save green — on the examination-room bone ground.
+       Palette from src/styles/chrome.css tokens. -->
+  <rect width="64" height="64" rx="12" fill="#F2EEE6"/>
+  <rect x="10" y="26" width="22" height="12" rx="2" fill="#C1272D"/>
+  <rect x="32" y="26" width="22" height="12" rx="2" fill="#1D7A4D"/>
+  <rect x="30" y="22" width="4" height="20" rx="1" fill="#14181A"/>
+</svg>

@@ -32,7 +32,7 @@
 import { defineConfig } from '@playwright/test'
 
 const PORT = 4317
-const BASE = `http://localhost:${PORT}/typography-matcher/`
+const BASE = `http://localhost:${PORT}/`
 
 export default defineConfig({
   testDir: 'tests/e2e',

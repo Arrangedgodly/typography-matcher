@@ -7,8 +7,9 @@
 # Notes:
 # - Node is pinned to 24: scripts/validate-fonts.mjs type-strips .ts imports
 #   directly, which needs Node >= 23.6 (T15).
-# - vite.config.ts already sets base '/typography-matcher/', matching the
-#   GitHub Pages project-site URL https://<owner>.github.io/typography-matcher/.
+# - Custom domain font.graydonwasil.com: vite base '/' + public/CNAME (copied
+#   into dist root) — served from the domain root, DNS via Cloudflare
+#   (CNAME font → arrangedgodly.github.io). docs/DEPLOY.md holds the sequence.
 # - E2E (npm run test:e2e) is intentionally NOT run here: it drives the
 #   machine's system Chrome over the real Google Fonts network (channel:
 #   'chrome') — it stays a local gate (T16), not a CI one.

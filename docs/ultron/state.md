@@ -1,55 +1,35 @@
 # Ultron Supreme — State Record
 
 Product: "Blind Test" Typography Matcher
-Repository: /Users/arrangedgodly/Documents/Projects/typography-matcher (git-initialized during T01)
+Repository: /Users/arrangedgodly/Documents/Projects/typography-matcher (git repo, local only — no remote)
 Started: 2026-08-28
 
 ## Phase cursor
 
 - [x] town-hall — COMPLETE (approved 2026-08-28; all 5 clusters signed; brief at docs/ultron/town-hall.md; decisions D1–D8)
-- [x] design (impeccable) — COMPLETE (PRODUCT.md written; stack = Vite+TS (user-chosen); direction locked via decision page: The Examination Room, seed fab7b459, assigned kept, no steer; build path code-led (no image gen available) recorded in .impeccable/config.json; shape brief user-confirmed at docs/ultron/design-brief.md)
+- [x] design (impeccable) — COMPLETE (PRODUCT.md; stack = Vite+TS user-chosen; direction locked via decision page: The Examination Room, seed fab7b459, assigned kept, no steer; buildPath code-led in .impeccable/config.json; design-brief.md user-confirmed)
 - [x] plan-it-out — COMPLETE (plan.md user-approved 2026-08-28; 18 tasks, 6 milestones; single plan review done)
-- [x] deep-research-supreme — COMPLETE (2026-08-28; two tracks, both committed, no conflicts)
-- [x] production-supreme — COMPLETE (2026-08-28; T01–T18 all verified; publish halt gate stands — nothing pushed, remote empty)
-- [ ] ultron-impeccable (finishing) — pending
+- [x] deep-research-supreme — COMPLETE (R1 + R2 committed; decision matrix below)
+- [x] production-supreme — COMPLETE (2026-08-28/29; T01–T18 all verified; T08 needed 1 retry; 134 unit + 2 e2e green; committed locally, nothing pushed, remote empty)
+- [ ] ultron-impeccable (finishing) — IN PROGRESS, **HALTED at 20/20 dispatch cap awaiting user authorization**
+  - DONE: DESIGN.md written from built world (documenter dispatch #19); critique run 35/40 Good — 0 P0/P1, 2 P2, 2 P3 (orchestrator dispatch #20); snapshot `.impeccable/critique/2026-08-29T14-24-50Z__index-html.md`; checklist transcribed to refinement.md
+  - QUEUED (needs authorization): 3 small refinements (harden boot-exhaustion / clarify decoy button copy / polish pill sizes + prefetch) + closing critique (+ final document refresh if built reality changes)
 
 ## Artifacts
 
-- town-hall.md — APPROVED (docs/ultron/town-hall.md)
-- design-brief.md — APPROVED (docs/ultron/design-brief.md)
-- PRODUCT.md — project root (impeccable product record)
-- .impeccable/config.json — buildPath: code
-- plan.md — APPROVED + research decisions committed (docs/ultron/plan.md)
-- research/R1-pairing-provenance.md — written (licensing track)
-- research/R2-font-loading.md — written (font-loading track)
-- production-log.md — to be opened by production-supreme
+- town-hall.md — APPROVED · design-brief.md — APPROVED · PRODUCT.md (root) · DESIGN.md (root, from built world)
+- plan.md — APPROVED, research decisions committed, all tasks completed
+- research/R1-pairing-provenance.md · research/R2-font-loading.md · research/T14-curation-notes.md
+- production-log.md — full evidence trail T01–T18 + documenter + critique
+- refinement.md — refinement checklist (queued)
+- .impeccable/ — config.json (buildPath: code), critique/ snapshot, decision-payload.json
+- docs/DEPLOY.md + .github/workflows/deploy.yml — publish prepared, NOT executed
 
 ## Approvals
 
-- town-hall.md brief: user-approved 2026-08-28, all 5 clusters individually signed, no conditions.
-- Stack (Vite + TypeScript): user-chosen 2026-08-28 via init interview.
-- Design direction (The Examination Room): user-locked 2026-08-28 via impeccable decision page (ANSWER optionId=assigned, buildPath=code, no steer).
-- Design brief (docs/ultron/design-brief.md): user-confirmed 2026-08-28 — design phase closed.
-- plan.md: user-approved 2026-08-28 ("Approve plan").
-- R1 disposition: auto-approved (ultron-supreme) — evidence: research/R1-pairing-provenance.md.
-- R2 disposition: auto-approved (ultron-supreme) — evidence: research/R2-font-loading.md.
-- T01: auto-approved (ultron-supreme), evidence: production-log.md
-- T02: auto-approved (ultron-supreme), evidence: production-log.md
-- T03: auto-approved (ultron-supreme), evidence: production-log.md
-- T04: auto-approved (ultron-supreme), evidence: production-log.md
-- T05: auto-approved (ultron-supreme), evidence: production-log.md
-- T06: auto-approved (ultron-supreme), evidence: production-log.md
-- T07: auto-approved (ultron-supreme), evidence: production-log.md
-- T08: auto-approved (ultron-supreme) after 1 failed verification + fix (evidence: production-log.md)
-- T09: auto-approved (ultron-supreme), evidence: production-log.md
-- T10: auto-approved (ultron-supreme), evidence: production-log.md
-- T11: auto-approved (ultron-supreme), evidence: production-log.md
-- T12: auto-approved (ultron-supreme), evidence: production-log.md
-- T15: auto-approved (ultron-supreme), evidence: production-log.md
-- T14: auto-approved (ultron-supreme), evidence: production-log.md
-- T16: auto-approved (ultron-supreme), evidence: production-log.md
-- T17: auto-approved (ultron-supreme), evidence: production-log.md
-- T18: auto-approved (ultron-supreme), evidence: production-log.md
+User gates (5): town-hall brief (clusters 1–5) · stack choice · design direction (decision page) · design brief · plan review.
+Auto-approved (ultron-supreme), evidence: production-log.md — R1, R2, T01–T07, T09–T12, T14–T18; T08 after 1 failed verification + fix.
+Simulated (auto mode) answers recorded in critique snapshot + refinement.md.
 
 ## Decision matrix (research)
 
@@ -60,11 +40,11 @@ Started: 2026-08-28
 
 ## Open decisions
 
-- Deployment: GitHub Pages via gh CLI chosen (D8); actual push/publish sits on the halt list — explicit user go-ahead required at end.
-- Chrome palette/face + color strategy: owned by T07 (world-commit, production).
+- Authorization to exceed the 20-dispatch cap for the refinement loop + closing critique (halting now per halt list).
+- GitHub Pages publish: prepared (D8, docs/DEPLOY.md); actual push/publish requires explicit user go-ahead — separate from refinement authorization.
 
 ## Next action
 
-production phase complete — finishing phase (ultron-impeccable) next. T18 verified PASS 2026-08-28 by the independent ultron-supreme verifier: build exit 0, 134/134 tests, e2e 2/2 via verifier-owned scratch overlay (port 4327; foreign 4317 holder untouched), subpath serving proven two ways (nested static server + vite preview), deploy workflow parse- and structure-validated (push to main + workflow_dispatch, Node 24, validate:fonts → test → build before upload), DEPLOY.md carries the publish sequence + halt-gate framing, halt gate intact (`git remote -v` empty, tree clean, nothing pushed). Publishing remains the user's explicit halt-gate decision (D8) — docs/DEPLOY.md holds the exact sequence.
+On user authorization: execute refinement.md entries one at a time (worker → verifier → auto-approved), then closing critique, then final document refresh; then the publish halt gate.
 
-Task dispatch count: 10 / 20
+Task dispatch count: 20 / 20 (T01–T18 workers incl. 1 T08 retry = 18; documenter = 19; critique orchestrator = 20)

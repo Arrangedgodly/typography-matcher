@@ -368,6 +368,23 @@ describe('persistence seam', () => {
 // ---------------------------------------------------------------------------
 
 describe('defaults', () => {
+  it('reserves upcoming draws without consuming or persisting them', () => {
+    const { store, saves } = recordingStore()
+    const deck = createDeck(samplePairings, { seenStore: store, rng: mulberry32(37) })
+    const preview = deck.peek(3)
+    expect(preview).toHaveLength(3)
+    expect(new Set(preview.map((p) => p.id)).size).toBe(3)
+    expect(deck.stats().seen).toBe(0)
+    expect(saves).toHaveLength(0)
+    expect(deck.peek(3)).toEqual(preview)
+    for (const pairing of preview) {
+      expect(deck.draw()).toMatchObject({ status: 'pairing', pairing })
+    }
+    expect(deck.peek(3)).toEqual([])
+    deck.reshuffle()
+    expect(deck.peek(3)).toHaveLength(3)
+    expect(deck.stats().seen).toBe(0)
+  })
   it('runs without injected options (Math.random + in-memory store) and still exhausts correctly', () => {
     const deck = createDeck(samplePairings)
     const ids = drainCycle(deck)

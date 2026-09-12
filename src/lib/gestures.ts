@@ -244,6 +244,7 @@ export function attachSwipeController(options: SwipeControllerOptions): SwipeCon
     }
     paper.classList.add('is-settling')
     paper.style.transform = ''
+    delete surface.dataset.swipe
     settleTimer = setTimeout(() => paper.classList.remove('is-settling'), SETTLE_CLASS_MS)
   }
 
@@ -303,6 +304,7 @@ export function attachSwipeController(options: SwipeControllerOptions): SwipeCon
     }
 
     paper.style.transform = `translate3d(${resistedDisplacement(dx)}px, 0, 0)`
+    surface.dataset.swipe = dx < 0 ? 'skip' : 'save'
 
     // Velocity samples: trailing window only, so a long slow drag followed by
     // a flick still reads as a flick.
@@ -346,6 +348,7 @@ export function attachSwipeController(options: SwipeControllerOptions): SwipeCon
       clearSettleTimer()
       paper.classList.remove('is-swiping', 'is-settling')
       paper.style.transform = ''
+      delete surface.dataset.swipe
       surface.removeEventListener('pointerdown', onPointerDown)
       surface.removeEventListener('pointermove', onPointerMove)
       surface.removeEventListener('pointerup', onPointerUp)

@@ -15,7 +15,7 @@ import type { Pairing } from './types'
 import { pairingFonts } from './types'
 
 /**
- * T08/T09 wiring: the Examination Room chrome (T07) around the T05 essay,
+ * Cold-load wiring: the Examination Room chrome (T07) around the T05 essay,
  * driven by the T06 deck through T04's gate in R2's caller order —
  *
  *   chrome.coverSwap()                                      // occluder down
@@ -24,6 +24,10 @@ import { pairingFonts } from './types'
  *   await frame                                             // swap has painted
  *   releasePairingFonts(prev)                               // evict old faces
  *   chrome.revealSwap()                                     // occluder lifts
+ *
+ * Ready pairings in the three-item lookahead buffer take the fast path:
+ * apply fonts, confirm the next frame, release the old handle, resume input.
+ * They do not cover the page or play the lens-change animation.
  *
  * The T09 choreography sequences with the gate (plan R2 note): the occluder
  * covers the paper for the WHOLE load — the previous pairing stays rendered
@@ -137,6 +141,20 @@ let currentHandle: FontLoadHandle | null = null
 let current: Pairing | null = null
 let swapping = false
 
+// Keep only a few upcoming pairings connected and decoded. Peeking never
+// consumes a decision; failed speculative loads are retried on demand.
+const buffer = new Map<string, { promise: Promise<FontLoadHandle>; ready: boolean }>()
+function warmUpcoming(): void {
+  for (const pairing of deck.peek(3)) {
+    if (buffer.has(pairing.id)) continue
+    const entry = { promise: loadPairingFonts(pairingFonts(pairing)), ready: false }
+    buffer.set(pairing.id, entry)
+    void entry.promise.then(() => { entry.ready = true }, () => {
+      if (buffer.get(pairing.id) === entry) buffer.delete(pairing.id)
+    })
+  }
+}
+
 function nextFrame(): Promise<void> {
   return new Promise((resolve) => requestAnimationFrame(() => resolve()))
 }
@@ -150,24 +168,29 @@ function recordSave(): void {
 }
 
 /**
- * The one R2 swap sequence every mount of a pairing runs through — a fresh
- * draw and the reload-restore both: cover, gate, variables, confirmed paint,
- * release, reveal. Persists the on-wall pairing id (T10) so a reload can
- * restore the SAME pairing instead of consuming a new one.
+ * Use a decoded buffer entry immediately; otherwise cover while its font
+ * gate finishes. Both paths confirm paint before releasing the old faces.
+ * Persist the on-wall pairing so reload restores it without another draw.
  */
 async function swapTo(pairing: Pairing): Promise<void> {
   swapping = true
-  chrome.coverSwap() // T09: occluder down for the whole load (previous pairing stays rendered beneath)
+  const buffered = buffer.get(pairing.id)
+  buffer.delete(pairing.id)
+  const instant = buffered?.ready === true
+  if (instant) chrome.setLoading(true)
+  else chrome.coverSwap()
   try {
-    const next = await loadPairingFonts(pairingFonts(pairing))
+    const next = await (buffered?.promise ?? loadPairingFonts(pairingFonts(pairing)))
     applyPairing(pairing) // variables only — faces already decoded
     await nextFrame() // the swap has painted before the old faces are evicted
     releasePairingFonts(currentHandle)
     currentHandle = next
+    next.link.dataset.activePairing = 'true'
     current = pairing
     storage.strings.set(CURRENT_PAIRING_KEY, pairing.id)
     chrome.updateMarkers(deck.stats())
-    chrome.revealSwap() // T09: reveal AFTER gate + double-rAF + confirmed paint + release
+    chrome.revealSwap(instant)
+    warmUpcoming()
   } catch (err) {
     // Gate failure (4000 ms budget): the previous pairing stays on the wall —
     // its variables were never touched — and the strip carries the

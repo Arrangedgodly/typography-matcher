@@ -13,6 +13,8 @@ Every pairing gallery shows you the font names first — and brand bias kicks in
 3. Saved pairings appear on the saved list with names, roles, and categories revealed, and persist in `localStorage` across reloads. Each save exports to your clipboard as working CSS.
 4. When you've seen everything, the exhaustion state offers a reshuffle.
 
+The next three pairings load while you browse. Once ready, selections swap on the next frame without the loading reveal. Upcoming pairings don't count as seen until you reach them; if you outpace the buffer, the next card waits for its actual fonts to load.
+
 ## Stack
 
 - [Vite](https://vite.dev/) + TypeScript, compiled to a static bundle — no backend, no accounts, no analytics

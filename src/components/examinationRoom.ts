@@ -88,7 +88,7 @@ export interface ExaminationRoom {
   /** T09 — drop the occluder over the paper + enter the loading state. */
   coverSwap(): void
   /** T09 — lift the occluder with the snap-step reveal + detent; back to ready. */
-  revealSwap(): void
+  revealSwap(instant?: boolean): void
   /** T09 — lift the occluder; show the recoverable error state + retry act. */
   failSwap(): void
   /** T09 — register the error state's retry handler (draws the next pairing). */
@@ -193,7 +193,7 @@ export function renderExaminationRoom(options: ExaminationRoomOptions = {}): Exa
   const explainerText = document.createElement('p')
   explainerText.className = 'lane-explainer-text'
   explainerText.textContent =
-    'Every page changes lenses — judge the setting, not the name. Identities arrive only on your prescription.'
+    'Swipe left to skip, right to save. On desktop, use the arrow keys. Font names appear in your prescription.'
   const dismiss = document.createElement('button')
   dismiss.type = 'button'
   dismiss.className = 'lane-explainer-dismiss'
@@ -454,7 +454,7 @@ strip.append(storageNotice)
   // keyboard-scrollable when it contains focus) must never leak into the
   // examined page, gated input included.
   window.addEventListener('keydown', (event) => {
-    if (event.repeat) return
+    if (event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
     if (
       event.target instanceof HTMLElement &&
@@ -514,8 +514,17 @@ strip.append(storageNotice)
       window.clearTimeout(lockTimer)
       playBlind('is-dropping') // stays down for the whole gate — no hide timer
     },
-    revealSwap(): void {
+    revealSwap(instant = false): void {
       applyLoading(false) // state ready + focus restored — the moment is decoration, never a gate
+      if (instant) {
+        hideBlindNow()
+        window.clearTimeout(lockTimer)
+        window.clearTimeout(detentTimer)
+        lane.classList.remove('is-swapping')
+        paperEl?.classList.remove('is-detenting', 'is-settling')
+        lane.scrollTop = 0
+        return
+      }
       unlockLaneSoon()
       if (!blind) return // never covered (reduced motion): nothing to lift
       if (prefersReducedMotion()) {

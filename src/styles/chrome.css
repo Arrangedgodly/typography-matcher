@@ -243,6 +243,15 @@
   transition: transform 160ms steps(3, end);
 }
 
+/* Mirror the finger's direction in the decision controls, beside the thumb. */
+.examination-room:has(.acuity-lane[data-swipe='skip']) .judge-skip,
+.examination-room:has(.acuity-lane[data-swipe='save']) .judge-save {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dummy-frame.is-settling {
     transition: none;

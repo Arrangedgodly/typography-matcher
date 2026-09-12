@@ -200,7 +200,7 @@ describe('the lens-swap moment (T09)', () => {
     await waitFor('state ready after retry', () => appRoot().dataset.state === 'ready')
     expect(markerCount()).toBe(`2 / ${DECK_SIZE} examined`) // failed draw + retry draw
     expect(headingVar()).not.toBe('')
-    expect(dynamicCss2Links()).toHaveLength(1)
+    expect(dynamicCss2Links()).toHaveLength(2) // current + upcoming prefetch
 
     // The reveal's decoration cleans itself up: blind hidden, lane unlocked,
     // detent class released.

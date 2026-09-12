@@ -96,6 +96,8 @@ export interface Deck {
    * The returned `stats` are post-draw (the drawn pairing already counts as seen).
    */
   draw(): DrawResult
+  /** Reserve upcoming draws without marking them seen or writing storage. */
+  peek(count?: number): readonly Pairing[]
   /**
    * Look up a deck pairing by id WITHOUT drawing: no rng roll, no seen-set
    * mutation, no store write. `null` when the id is not in the deck (stale
@@ -152,18 +154,28 @@ export function createDeck(pairings: readonly Pairing[], options: DeckOptions = 
     return { total: deck.length, seen: seen.size, unseen, exhausted: unseen === 0 }
   }
 
+  const upcoming: Pairing[] = []
+
+  function peek(count = 1): readonly Pairing[] {
+    const pool = deck.filter((pairing) => !seen.has(pairing.id) && !upcoming.includes(pairing))
+    while (upcoming.length < count && pool.length > 0) {
+      const roll = rng()
+      const index = Number.isFinite(roll)
+        ? Math.min(Math.max(Math.floor(roll * pool.length), 0), pool.length - 1)
+        : 0
+      upcoming.push(pool.splice(index, 1)[0])
+    }
+    return upcoming.slice(0, count)
+  }
+
   function draw(): DrawResult {
-    const pool = deck.filter((pairing) => !seen.has(pairing.id))
-    if (pool.length === 0) {
+    peek()
+    const pairing = upcoming.shift()
+    if (!pairing) {
       return { status: 'exhausted', stats: stats() }
     }
     // floor(roll * n) is uniform for roll ~ U[0,1). The clamp keeps a
     // hostile injected rng (1, negatives, NaN) on a valid index.
-    const roll = rng()
-    const index = Number.isFinite(roll)
-      ? Math.min(Math.max(Math.floor(roll * pool.length), 0), pool.length - 1)
-      : 0
-    const pairing = pool[index]
     seen.add(pairing.id)
     store.save(seen)
     return { status: 'pairing', pairing, stats: stats() }
@@ -174,9 +186,10 @@ export function createDeck(pairings: readonly Pairing[], options: DeckOptions = 
   }
 
   function reshuffle(): void {
+    upcoming.length = 0
     seen.clear()
     store.clear()
   }
 
-  return { draw, recall, reshuffle, stats }
+  return { draw, peek, recall, reshuffle, stats }
 }

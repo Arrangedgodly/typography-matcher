@@ -114,12 +114,10 @@ async function seenCount(page: Page): Promise<number> {
   return Number(n[1])
 }
 
-/** Identify the on-wall pairing from the single dynamic display=block css2
- * link. At `ready` exactly one must exist (the old handle is released after
- * the new pairing paints — R2 ordering). */
+/** Identify the active stylesheet, excluding the upcoming font buffer. */
 async function currentPairing(page: Page): Promise<PairingRecord> {
   const key = await page.evaluate(() => {
-    const hrefs = Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]'))
+    const hrefs = Array.from(document.querySelectorAll<HTMLLinkElement>('link[data-active-pairing="true"]'))
       .map((l) => l.getAttribute('href') ?? '')
       .filter((h) => h.includes('display=block'))
     if (hrefs.length !== 1) return `__LINKS_${hrefs.length}`
@@ -334,14 +332,14 @@ test('full happy path: explainer → mixed-input judgments → reveal → export
   await awaitSettled(page)
   await expect(page.locator('.lane-explainer')).toHaveCount(0) // dismissal persisted
   await expect(page.locator('.lane-prescription')).toHaveText('Prescription · 2 saved')
-  expect(await seenCount(page)).toBe(5) // 4 persisted + the resumed boot draw
+  expect(await seenCount(page)).toBe(4) // reload restores the current pairing
   const resumedPairing = await currentPairing(page)
-  judgedIds.push(resumedPairing.id)
-  expect(new Set(judgedIds).size).toBe(5) // the resumed draw repeated nothing
+  expect(resumedPairing.id).toBe(fourthPairing.id)
+  expect(new Set(judgedIds).size).toBe(4)
 
   // -- 6. Walk the deck to exhaustion (skip everything remaining) -------------
   const collected = new Set(judgedIds)
-  let seenNow = 5
+  let seenNow = 4
   for (let guard = 0; guard < DECK_SIZE + 5; guard += 1) {
     if (await isExhausted(page)) break
     seenNow = await judgeByKeyAndWait(page, 'ArrowLeft', seenNow)

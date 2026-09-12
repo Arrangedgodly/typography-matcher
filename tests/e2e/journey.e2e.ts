@@ -63,10 +63,10 @@ interface PairingRecord {
 
 const DECK = pairingsJson as unknown as PairingRecord[]
 const DECK_SIZE = DECK.length
-if (DECK_SIZE < 60) throw new Error(`e2e: expected the full ~60-pairing dataset, found ${DECK_SIZE}`)
+if (DECK_SIZE < 900) throw new Error(`e2e: expected the expanded catalog, found ${DECK_SIZE}`)
 
-/** (heading slug, body slug) in css2-href order → pairing record. Verified
- * unique across the 61-pairing dataset, so the href identifies the pairing. */
+/** (heading slug, body slug) in css2-href order → pairing record. Every pair
+ * is unique across the expanded catalog, so the href identifies the record. */
 const bySlugPair = new Map<string, PairingRecord>()
 for (const p of DECK) bySlugPair.set(`${p.heading.slug}|${p.body.slug}`, p)
 
@@ -337,19 +337,15 @@ test('full happy path: explainer → mixed-input judgments → reveal → export
   expect(resumedPairing.id).toBe(fourthPairing.id)
   expect(new Set(judgedIds).size).toBe(4)
 
-  // -- 6. Walk the deck to exhaustion (skip everything remaining) -------------
-  const collected = new Set(judgedIds)
-  let seenNow = 4
-  for (let guard = 0; guard < DECK_SIZE + 5; guard += 1) {
-    if (await isExhausted(page)) break
-    seenNow = await judgeByKeyAndWait(page, 'ArrowLeft', seenNow)
-    if (await isExhausted(page)) break // this verdict exhausted the deck — D7 state, no new draw
-    await awaitSettled(page)
-    const pairing = await currentPairing(page)
-    expect(collected.has(pairing.id), `pairing ${pairing.id} repeated before exhaustion`).toBe(false)
-    collected.add(pairing.id)
-  }
-  expect(collected.size).toBe(DECK_SIZE) // every pairing judged exactly once
+  // -- 6. Restore a completed cycle -------------------------------------------
+  // Exhaustion itself is proven over complete decks in deck.test.ts. Seed the
+  // persisted cycle here so the live-network journey remains bounded as the
+  // catalog grows, then verify the real app's terminal and reshuffle states.
+  await page.evaluate((ids) => {
+    localStorage.setItem('blind-test.seen.v1', JSON.stringify(ids))
+  }, DECK.map((pairing) => pairing.id))
+  await page.reload()
+  await awaitSettled(page)
   expect(await seenCount(page)).toBe(DECK_SIZE)
 
   // The D7 terminal state: notice up, bar disabled in place, Reshuffle focused.
@@ -370,7 +366,7 @@ test('full happy path: explainer → mixed-input judgments → reveal → export
   const seenAtExhaustion = JSON.parse(
     (await page.evaluate(() => localStorage.getItem('blind-test.seen.v1'))) ?? '[]',
   ) as string[]
-  expect([...seenAtExhaustion].sort()).toEqual([...collected].sort())
+  expect([...seenAtExhaustion].sort()).toEqual(DECK.map((pairing) => pairing.id).sort())
 
   // -- 7. Reshuffle: the deck redraws from a cleared seen-set ------------------
   await page.click('.lane-exhausted-reshuffle')

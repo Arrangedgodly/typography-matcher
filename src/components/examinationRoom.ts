@@ -583,12 +583,18 @@ strip.append(storageNotice)
     },
     updateMarkers(stats: DeckStats): void {
       rail.replaceChildren()
-      for (let i = 0; i < stats.total; i += 1) {
-        const tick = document.createElement('span')
-        tick.className = 'marker-tick'
-        if (i < stats.seen - 1) tick.classList.add('seen')
-        if (i === stats.seen - 1) tick.classList.add('current')
-        rail.appendChild(tick)
+      rail.classList.toggle('is-condensed', stats.total > 80)
+      if (stats.total > 80) {
+        rail.style.setProperty('--deck-progress', `${(stats.seen / stats.total) * 100}%`)
+      } else {
+        rail.style.removeProperty('--deck-progress')
+        for (let i = 0; i < stats.total; i += 1) {
+          const tick = document.createElement('span')
+          tick.className = 'marker-tick'
+          if (i < stats.seen - 1) tick.classList.add('seen')
+          if (i === stats.seen - 1) tick.classList.add('current')
+          rail.appendChild(tick)
+        }
       }
       count.textContent = `${stats.seen} / ${stats.total} examined`
     },

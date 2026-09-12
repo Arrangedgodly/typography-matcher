@@ -170,7 +170,7 @@ The chrome is deliberately clinical and recedes (visitor mode is Operate: task c
 - One-viewport instrument: strip / acuity lane / judgment bar as a fixed CSS grid row track (`auto minmax(0, 1fr) auto`); the lane scrolls internally, the room never does.
 - Clinical neutral ground (bone `#F2EEE6`) so any judged pairing can star; the essay sheet rides one step whiter (`#FBF9F4`).
 - One cord of color — ophthalmic red / chart green — on the judgment bar only; zero saturated pixels anywhere else (pixel-scan verified at finish).
-- No eye-chart letterforms in chrome: progress is a 3px tick rail + tabular numerals, never letter displays.
+- No eye-chart letterforms in chrome: small decks use 3px ticks; the full catalog uses a painted progress rail plus tabular numerals, never letter displays.
 - Strict reveal: family names exist in the DOM only while the prescription pad is open; `steps()`-only motion; `prefers-reduced-motion` collapses every animation to instant.
 - Contrast floor ≥ 4.5:1 on every chrome text pair (minimum pair: cord green on bone, 4.60:1).
 

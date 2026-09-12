@@ -103,6 +103,33 @@
   box-shadow: none;
 }
 
+/* Large catalogs use one painted rail instead of rebuilding hundreds of
+   tick elements after every decision. The count beside it stays exact. */
+.marker-rail.is-condensed {
+  position: relative;
+  width: clamp(7rem, 24vw, 22rem);
+  border-bottom: 1px solid var(--ink-soft);
+  background: linear-gradient(
+    to right,
+    var(--ink-soft) 0 var(--deck-progress),
+    transparent var(--deck-progress) 100%
+  );
+  background-size: 100% 3px;
+  background-position: bottom;
+  background-repeat: no-repeat;
+}
+
+.marker-rail.is-condensed::after {
+  position: absolute;
+  bottom: 0;
+  left: var(--deck-progress);
+  width: 3px;
+  height: 12px;
+  background: var(--ink);
+  content: '';
+  transform: translateX(-1px);
+}
+
 .marker-count,
 .lane-prescription {
   margin: 0;

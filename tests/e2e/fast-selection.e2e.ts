@@ -12,6 +12,8 @@ for (const mobile of [false, true]) {
       await page.goto('http://localhost:4317/')
       await page.locator('.lane-explainer-dismiss').click()
       await expect(page.locator('.examination-room')).toHaveAttribute('data-state', 'ready')
+      await expect(page.locator('.marker-rail')).toHaveClass(/is-condensed/)
+      await expect(page.locator('.marker-tick')).toHaveCount(0)
       // Wait for speculative font requests to decode, including the paint gate.
       await page.waitForFunction(async () => {
         if (document.querySelectorAll('link[href*="display=block"]').length !== 4) return false

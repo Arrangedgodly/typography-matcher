@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "expand:fonts": "node scripts/expand-font-catalog.mjs",
     "validate:fonts": "node scripts/validate-fonts.mjs"
   },
   "devDependencies": {

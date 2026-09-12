@@ -2,7 +2,7 @@
 
 Judge font pairings on merit, not on name recognition.
 
-Every pairing gallery shows you the font names first — and brand bias kicks in before you've judged anything. This tool flips the order: a fixed dummy webpage (hero, standfirst, paragraphs, blockquote, small UI chrome) receives random pairings from a curated set of 61 Google Fonts combinations, with identities **hidden**. Swipe right to save, left to skip. Font names are revealed **only on the saved list**, where each save can be copied as a ready-to-paste Google Fonts `<link>` + CSS snippet.
+Every pairing gallery shows you the font names first — and brand bias kicks in before you've judged anything. This tool flips the order: a fixed dummy webpage (hero, standfirst, paragraphs, blockquote, small UI chrome) receives random pairings covering 1,804 Google Fonts families, with identities **hidden**. Swipe right to save, left to skip. Font names are revealed **only on the saved list**, where each save can be copied as a ready-to-paste Google Fonts `<link>` + CSS snippet.
 
 **Live:** [font.graydonwasil.com](https://font.graydonwasil.com)
 
@@ -32,7 +32,9 @@ npm run test:e2e       # e2e (local gate — drives system Chrome over live Goog
 npm run validate:fonts # validate the curated pairing dataset
 ```
 
-Curated pairings live in [`src/data/pairings.json`](src/data/pairings.json) and are shape-validated at build and runtime.
+Pairings live in [`src/data/pairings.json`](src/data/pairings.json) and are shape-validated at build and runtime.
+
+The deck preserves 61 editorial pairings and adds catalog-wide pairings generated from Google Fonts metadata. Run `npm run expand:fonts` to refresh it. The generator keeps Latin text families, excludes symbols and barcodes, reserves expressive faces for headings, and selects compatible readable bodies. `npm run validate:fonts` checks every generated family, weight, and italic against the live CSS API. See [`docs/FONT_CATALOG.md`](docs/FONT_CATALOG.md) for the coverage rules.
 
 ## Accessibility
 

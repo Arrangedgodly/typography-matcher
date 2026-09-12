@@ -29,7 +29,7 @@ Every existing pairing gallery (fontpair.co, Typewolf, Archetype) shows names be
 ## Operating Context
 
 - Static site, no backend, no accounts; localStorage persistence on-device.
-- Curated pairing dataset (~60 at launch) embedded in the app; unseen-first random draw; seen-set persists; exhaustion state offers reshuffle.
+- Embedded deck covering the Latin text catalog in Google Fonts: 61 editorial pairings plus metadata-generated combinations; unseen-first random draw; seen-set persists; exhaustion state offers reshuffle.
 - Runtime dependency: Google Fonts CSS API (fonts loaded dynamically per pairing; card reveals only after both faces load — users never judge a fallback font).
 - English content. Modern browsers. Clipboard available (secure context on GitHub Pages).
 
@@ -46,7 +46,7 @@ Confirmed (approved scoping brief `docs/ultron/town-hall.md`, decisions D1–D8)
 
 Explicit non-goals: accounts/backend/cloud sync, multiple templates, custom user text, live algorithmic pairing generation, typographic controls (size/weight/leading sliders), dark mode, i18n, shareable URLs.
 
-Undecided / open (owners in town-hall dispositions): pairing-list provenance & licensing (research, blocks curation data task); launch list size target ~60 quality-barred (research-informed).
+Catalog refreshes use Google Fonts metadata and the project's pairing rules. Symbol, barcode, redaction, music-notation, and non-Latin-only families remain outside the English specimen.
 
 ## Brand Commitments
 

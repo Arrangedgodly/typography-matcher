@@ -21,8 +21,8 @@
  * HTTP status (400 ⇒ rejected request — re-probe each family individually to
  * attribute the failure), (2) family presence in the served CSS, (3) every
  * requested (style, weight) tuple present in the served descriptors. It also
- * spot-checks one woff2 per unique family for the long-lived cache header
- * R2's prefetch recommendation depends on (`cache-control: max-age` —
+ * samples up to 100 woff2 files for the long-lived cache header R2's
+ * prefetch recommendation depends on (`cache-control: max-age` —
  * observed `public, max-age=31536000`, E8).
  *
  * Node >= 23.6 (or >= 22.6 with `--experimental-strip-types`): the script
@@ -62,6 +62,8 @@ const RETRY_DELAYS_MS = [500]
  * 31536000 = 1 year; 604800 = 7 days tolerates drift, still "long-cached").
  */
 const WOFF2_MIN_MAX_AGE = 604800
+/** Cache policy is host-wide; sample broadly without issuing thousands of duplicate-policy requests. */
+const MAX_WOFF2_CACHE_CHECKS = 100
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -359,8 +361,10 @@ async function main() {
 
   const pairingResults = await runPool(pairings, (p) => checkPairing(p))
 
-  // woff2 spot check — one per unique URL across the whole run
-  const woff2Urls = [...new Set(pairingResults.flatMap((r) => r.woff2Urls))]
+  // Check every family/tuple in CSS, then sample the shared gstatic cache policy.
+  const allWoff2Urls = [...new Set(pairingResults.flatMap((r) => r.woff2Urls))]
+  const stride = Math.max(1, Math.ceil(allWoff2Urls.length / MAX_WOFF2_CACHE_CHECKS))
+  const woff2Urls = allWoff2Urls.filter((_, index) => index % stride === 0).slice(0, MAX_WOFF2_CACHE_CHECKS)
   const woff2Results = await runPool(woff2Urls, (url) => checkWoff2Cache(url))
 
   const failedPairings = pairingResults.filter((r) => r.problems.length > 0)
